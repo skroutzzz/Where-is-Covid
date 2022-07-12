@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS Users (
     userUsername varchar(128) NOT NULL,
     userPassword varchar(128) NOT NULL,
     userMail varchar(128) NOT NULL
+    
 );
 
 CREATE TABLE IF NOT EXISTS Admins (
