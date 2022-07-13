@@ -11,6 +11,6 @@ CREATE TABLE IF NOT EXISTS Users (
 
 
 INSERT INTO  Users
-VALUES ('101','Stavrou Ioannis','K!mi123','stavroujohn@gmail.com'),
-        ('201','Konstantinos Tsigkounis','Skr0utzzz%','kontsig@gmail.com'),
-        ('301','Nanos Giorgod','Dvergard12#','nanosgio@gmail.com');
+VALUES ('1','StavrouI','$2y$10$MzwhZvaoupJClUD0VNJzmubGmjBb90K6REAIC.eXEMxvDm0nOXkpm','stavroujohn@gmail.com'),
+        ('2','KonstantinosT','$2y$10$uzReQ0lM52F53emq8IPS.e5BOB0GWvgGli2KxwI/InD73x0R2ZS/u','kontsig@gmail.com'),
+        ('3','NanosG','$2y$10$xGuI4VhsBur5nmpJO4VNGOzfpIMx2Gnv3xE.CKe9heNlzUHzKHEhu','nanosgio@gmail.com');
