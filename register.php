@@ -102,10 +102,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>Sign Up</title>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="SSfont.css">
-    <style>
+    <!-- <style>
         body{ font: 14px sans-serif; }
         .wrapper{ width: 360px; padding: 20px; }
-    </style>
+    </style> -->
 </head>
 <body>
     <div class="wrapper">
@@ -129,7 +129,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                <!-- <input type="reset" class="btn btn-secondary ml-2" value="Reset"> -->
             </div>
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
         </form>

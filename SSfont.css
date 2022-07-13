@@ -1,6 +1,6 @@
 body {
 
-    background: #010614;
+    background: #b6bec0;
 
     display: flex;
     
@@ -27,11 +27,11 @@ form {
 
     width: 1000px;
 
-    border: 3px solid rgb(114, 5, 81);
+    border: 3px solid rgb(189, 66, 66);
 
     padding: 20px;
 
-    background: rgb(75, 3, 75);
+    background: rgb(23, 24, 23);
 
     border-radius: 20px;
 
@@ -75,11 +75,11 @@ button {
 
     float: right;
 
-    background: rgb(35, 174, 202);
+    background: rgb(136, 136, 136);
 
     padding: 10px 15px;
 
-    color: #fff;
+    color: rgb(136, 136, 136);
 
     border-radius: 5px;
 
@@ -123,11 +123,11 @@ a {
 
     float: right;
 
-    background: rgb(183, 225, 233);
+    background: rgb(136, 136, 136);
 
     padding: 10px 15px;
 
-    color: #fff;
+    color: rgb(14, 1, 1);
 
     border-radius: 10px;
 
