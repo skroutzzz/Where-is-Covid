@@ -44,29 +44,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
     
-    // Validate password
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter a password.";     
-    } 
+
+
+     // Validate password
+
+
+     if(empty(trim($_POST["password"]))){
+         $password_err = "Please enter a password.";     
+     }  
         elseif(strlen(trim($_POST["password"])) < 8 ){
-            $password_err = "Password must have at least 8 characters";
-        }
+             $password_err = "Password must have at least 8 characters";
+    }
+      elseif(!preg_match("#[a-z]+#",$_POST["password"])){
+            $password_err = "Password should include at least one low letter";
+    } 
         elseif(!preg_match("#[A-Z]+#",$_POST["password"])){
             $password_err = "Password should include at least one upper letter";
-        }
+    }
         elseif(!preg_match("#[0-9]+#",$_POST["password"])){
             $password_err = "Password should include at least one number";
-        }
-        elseif(!preg_match("#[a-z]+#",$_POST["password"])){
-            $password_err = "Password should include at least one low letter";
-        }
-        elseif(!preg_match('@[^\w]@', $password)){
-            $password_err = "Password should include at least one special character";
-        }
-
-     else{
-        $password = trim($_POST["password"]);
     }
+        elseif(!preg_match('@[#$*&!]@', $_POST["password"])){
+            $password_err = "Password should include at least one special character";
+    }
+    else{
+         $password = trim($_POST["password"]);
+     }
     
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
