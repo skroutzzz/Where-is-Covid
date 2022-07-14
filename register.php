@@ -14,11 +14,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if(empty(trim($_POST["email"]))){
         $email_err = "Please enter your email.";
-    } elseif(!preg_match('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', trim($_POST["email"]))){
+    } elseif(!preg_match('/^[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', trim($_POST["email"]))){
         $email_err = "Try another email.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT userMail FROM Users WHERE userMail = ?";
+        $sql = "SELECT userID FROM Users WHERE userMail = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -120,16 +120,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO Users (userUsername, userPassword) VALUES (?, ?)";
+        $sql = "INSERT INTO Users (userUsername, userPassword, userMail) VALUES (?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
+            mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password, $param_email);
             
             // Set parameters
+            $param_email = $email;
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
             
@@ -151,50 +152,115 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="SSfont.css">
-    <!-- <style>
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 360px; padding: 20px; }
-    </style> -->
-</head>
-<body>
-    <div class="wrapper">
-        <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
-                <span class="invalid-feedback"><?php echo $email_err; ?></span>
-            </div>    
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-                <span class="invalid-feedback"><?php echo $username_err; ?></span>
-            </div>    
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
-                <span class="invalid-feedback"><?php echo $password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
-                <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit">
-                <!-- <input type="reset" class="btn btn-secondary ml-2" value="Reset"> -->
-            </div>
-            <p>Already have an account? <a href="index.php">Login here</a>.</p>
-        </form>
-    </div>    
-</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Where is Covid</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather&family=Poppins:wght@300&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link href = "signup.css" rel = "stylesheet"
+    !important/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
+
+    </head>
+  <body>
+    <div class="container">
+      <!-- section-left-start -->
+
+      <div class="container-left">
+        <div class="wrapper-left">
+          <div class="part-one">
+            <h3>Where is Covid</h3>
+            <p>Sign up for an account</p>
+          </div>
+         <!--action="post"  method="post" enctype="multipart/form-data" onsubmit="AJAXSubmit(this); return false;"-->
+           <div class="input_signup_form"  
+          > 
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="signupForm" method="POST">
+             
+              <label for="" class="<?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>"> Email </label>
+              <span class="invalid-feedback"><?php echo $email_err; ?></span>
+              <input
+                class="input_field"
+                class="form-control"
+                type="username"
+                placeholder="Ιnput your Email here"
+                id="signupFormEmail"
+                name="email" required
+              />
+              
+              
+              <label for="" class="username <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>"> Username </label>
+              <span class="invalid-feedback"><?php echo $username_err; ?></span>
+              <input
+                class="input_field"
+                class="form-control"
+                type="username"
+                placeholder="Ιnput your username here"
+                id="signupFormUsername"
+                name="username" required
+              />
+              <label for="" class="pass <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>"> Password </label>
+              <span class="invalid-feedback"><?php echo $password_err; ?></span>
+              <input
+                class="input_field"
+                class="form-control"
+                type="password"
+                placeholder="Ιnput your password here"
+                name="password" required
+                id="signupFormPassword"
+              />
+              
+              <label for="" class="pass <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>"> Confirm Password </label>
+              <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+              <input
+                class="input_field"
+                class="form-control"
+                type="password"
+                placeholder="Ιnput your password here"
+                name="confirm_password" required
+                id="signupFormPassword"
+              />
+            <div class="buttons">
+            <button class="signup_button" name="signup_button" type="submit">Sign up</button>
+              <a href="/synalies_askhsh/php/register.php">
+            <!-- <button class="btn-two">
+              <i class="fab fa-google"></i> Sign up with google
+            </button> -->
+          </div>
+            </form>
+          </div>
+          
+          <!-- <div class="check">
+            <label for="privacy">
+              I read and accept the User Agreement and <br />
+              Privacy Policy.
+              <input id="privacy" type="checkbox" />
+              <span class="checkmark"></span>
+            </label>
+          </div> -->
+          <div class="login">
+            <a href="index.php">Already have an account? 
+              Login </a>
+          </div>
+        </div>
+      </div>
+      <!-- section-left-end -->
+    </div>
+  </body>
+</html>

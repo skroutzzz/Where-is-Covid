@@ -1,0 +1,181 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+body {
+  background-color: #f8f8f8;
+  font-family: Merriweather;
+}
+
+.container-left {
+  width: 350px;
+  height: 700x;
+  margin: 150px auto;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #d3d3d5;
+  background-color: #fff;
+}
+/* part-one-left-start  */
+.wrapper-left .part-one {
+  width: 100%;
+  height: 100px;
+  border-radius: 10px;
+  background-color: #eaf2ff;
+  padding: 30px 20px;
+  margin-bottom: 40px;
+}
+.wrapper-left .part-one h3 {
+  color: #195bc9;
+  margin-bottom: 4px;
+}
+.wrapper-left .part-one p {
+  color: #02021a;
+}
+
+.wrapper-left .input_signup_form form {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.wrapper-left .input_signup_form form .input_field {
+  border: 0;
+  outline: none;
+  width: 100%;
+  border: 1px solid #d7d6db;
+  border-radius: 7px;
+  height: 40px;
+  margin: 15px 0;
+}
+.wrapper-left .input_signup_form form input::placeholder {
+  font-size: 12px;
+  color: #9d9d9f;
+}
+.wrapper-left .input_signup_form {
+  position: relative;
+}
+.wrapper-left .input_signup_form form input[type="username"],
+input[type="password"] {
+  padding: 0 50px;
+}
+.wrapper-left .input_signup_form form input[type="username"]:focus {
+  border: 1px solid #115efa;
+}
+.wrapper-left .input_signup_form form input[type="password"]:focus {
+  border: 1px solid #115efa;
+}
+.wrapper-left .input_signup_form form i {
+  color: #9a9a9c;
+  position: absolute;
+}
+.wrapper-left .input_signup_form form i.pass {
+  top: 135.5px;
+  left: 11px;
+}
+.wrapper-left .input_signup_form form i.username {
+  left: 11px;
+  top: 48.2px;
+}
+.wrapper-left .input_signup_form form label {
+  color: #01000d;
+}
+.wrapper-left .buttons {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  gap: 12px;
+}
+.wrapper-left .buttons .signup_button,
+.btn-two,
+.add_concert_button {
+  border: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 45px;
+  border-radius: 25px;
+}
+.wrapper-left .buttons .signup_button {
+  background-color: #115efa;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+}
+.wrapper-left .buttons .add_concert_button {
+  background-color: #115efa;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+}
+.wrapper-left .buttons .btn-two {
+  background-color: #fff;
+  border: 1px solid #d9d9db;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.wrapper-left .check label {
+  position: absolute;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 21px;
+  text-align: center;
+  padding: 0 33px;
+  text-align: left;
+}
+.wrapper-left .check label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.wrapper-left .check label span {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 5px;
+  border: 1px solid #cfced3;
+}
+label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+label input:checked ~ .checkmark {
+  background-color: #115efa;
+}
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+label input:checked ~ .checkmark:after {
+  display: block;
+}
+label .checkmark::after {
+  left: 5.5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.wrapper-left .signup_link {
+  position: relative;
+  font-size: 14px;
+  top: 70px;
+}
+.wrapper-left .signup_link p {
+  display: inline-block;
+}
+input[type="radio"] {
+  -ms-transform: scale(0.5); /* IE 9 */
+  -webkit-transform: scale(0.5); /* Chrome, Safari, Opera */
+  transform: scale(0.5);
+}
