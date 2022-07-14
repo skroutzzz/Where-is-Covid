@@ -179,6 +179,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     </head>
   <body>
+  <style>
+    body {
+       
+        background: linear-gradient(to right, blue, pink);         
+    }
+    
+    </style>
     <div class="container">
       <!-- section-left-start -->
 
