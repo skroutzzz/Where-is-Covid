@@ -87,46 +87,99 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     mysqli_close($link);
 }
 ?>
- 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Where is Covid</title>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="SSfont.css">
-    <!-- <style>
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 360px; padding: 20px; }
-    </style> -->
-</head>
-<body>
-    <div class="wrapper">
-        <h2>Login</h2>
-        <p>Please fill in your credentials to login.</p>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather&family=Poppins:wght@300&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href = "login.css" rel = "stylesheet"
+    !important/>
+    
 
-        <?php 
-        if(!empty($login_err)){
-            echo '<div class="alert alert-danger">' . $login_err . '</div>';
-        }        
-        ?>
 
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-                <span class="invalid-feedback"><?php echo $username_err; ?></span>
-            </div>    
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                <span class="invalid-feedback"><?php echo $password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Login">
-            </div>
-            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
-        </form>
+    </head>
+    <body>
+    <div class="container">
+      <!-- section-left-start -->
+
+      <div class="container-left">
+        <div class="wrapper-left">
+          <div class="part-one">
+            <h3>Where is Covid</h3>
+            <p>Log into your account</p>
+          </div>
+         <!--action="post"  method="post" enctype="multipart/form-data" onsubmit="AJAXSubmit(this); return false;"-->
+           <div class="input_login_form"  
+          > 
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" value="<?php echo $username; ?>" name="loginForm" method="POST">
+              <label for="" class="username <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>">Username </label>
+              <i class="fas fa-user username"></i>
+              <span class="invalid-feedback"><?php echo $username_err; ?></span>
+              <input
+                class="input_field"
+                class="form-control"
+                type="username"
+                placeholder="Input your username here"
+                id="loginFormUsername"
+                name="username" required
+              />
+              
+              <label for="" class="pass <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">Password </label>
+              <i class="fas fa-lock pass"></i>
+              <span class="invalid-feedback"><?php echo $password_err; ?></span>
+              <input
+                class="input_field"
+                class="form-control"
+                type="password"
+                placeholder="Input your password here"
+                name="password" required
+                id="loginFormPassword"
+              />
+
+
+            <div class="buttons">
+            <button class="login_button" name="login_button" type="submit">Login</button>
+
+            
+            <!-- <button class="btn-two">
+              <i class="fab fa-google"></i> Sign up with google
+            </button> -->
+          </div>
+            </form>
+          </div>
+          
+          <!-- <div class="check">
+            <label for="privacy">
+              I read and accept the User Agreement and <br />
+              Privacy Policy.
+              <input id="privacy" type="checkbox" />
+              <span class="checkmark"></span>
+            </label>
+          </div> -->
+          <div class="signup">
+            <p>Do not have an account?</p>
+            <a href="register.php"> Sign up </a>
+          </div>
+          <!-- <div class="hidden" name="signupSuccessMessage">Signup was succesful. </div>
+        </div> -->
+      </div>
+      <!-- section-left-end -->
     </div>
-</body>
+  </body>
 </html>
+
+
