@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $email_err = "Try another email.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT userID FROM Users WHERE userMail = ?";
+        $sql = "SELECT user_id FROM myUSERS WHERE user_email = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -54,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_err = "Username can only contain letters, numbers, and underscores.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT userId FROM Users WHERE userUsername = ?";
+        $sql = "SELECT user_id FROM myUSERS WHERE user_username = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -123,7 +123,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO Users (userUsername, userPassword, userMail) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO myUSERS (user_username, user_password, user_email) VALUES (?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
