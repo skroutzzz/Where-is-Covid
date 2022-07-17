@@ -1,4 +1,6 @@
 
+DROP DATABASE IF EXISTS wic_db;
+
 CREATE TABLE  myUSERS (
 
 			user_id int NOT NULL PRIMARY KEY,
