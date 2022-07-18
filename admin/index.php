@@ -1,8 +1,20 @@
+<?php
+// Initialize the session
+session_start();
+ 
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: ../new_main/index.php");
+    exit;
+}
+?>
+
 <?php  
 include('includes/header.php');
 include('includes/navbar.php');
 
 ?>
+
 
 
 <!-- Content Wrapper -->
@@ -252,8 +264,7 @@ include('includes/navbar.php');
             aria-expanded="false"
           >
             <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-              >Douglas McGee</span
-            >
+              ><b><?php echo htmlspecialchars($_SESSION["username"]); ?></b></span>
             <img
               class="img-profile rounded-circle"
               src="img/undraw_profile.svg"
@@ -279,7 +290,7 @@ include('includes/navbar.php');
             <div class="dropdown-divider"></div>
             <a
               class="dropdown-item"
-              href="#"
+              href="logout.php"
               data-toggle="modal"
               data-target="#logoutModal"
             >
