@@ -5,7 +5,7 @@ const reqListener = response => {
   const loadData = () => {
     const req = new XMLHttpRequest();
     req.onload = reqListener;
-    req.open("get", "file.txt", true);
+    req.open("get", "AJAXfile.txt", true);
     req.send();
   };
   window.onload = () => {
