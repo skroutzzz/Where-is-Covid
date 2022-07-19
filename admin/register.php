@@ -1,5 +1,3 @@
-
-
 <?php
 // Include config file
 require_once "config.php";
@@ -512,26 +510,61 @@ include('includes/navbar.php');
 
     <div class="card-body">
     <div class="table-responsive">
+
+
+    <?php
+      require_once "config.php";
+      $query = "SELECT * FROM myusers WHERE admin_id = 1";
+      $query_run = mysqli_query($link, $query);
+
+    
+    ?> 
+
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start Date</th>
-                    <th>Salary</th>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>EDIT</th>
+                    <th>DELETE</th>
                 </tr>   
             </thead>
             <tbody>
+            <?php 
+            if(mysqli_num_rows($query_run)>0)
+            {
+              while($row = mysqli_fetch_assoc($query_run))
+              {
+                ?>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><?php echo $row['user_id']; ?></td>
+                    <td><?php echo $row['user_username']; ?></td>
+                    <td><?php echo $row['user_email']; ?></td>
+                    <td><?php echo $row['user_password']; ?></td>
+                    
+                    <td>
+                      <form action="" method="POST">
+                      <button type="submit" class="btn btn-success">EDIT</button>
+                      </form>
+                    </td>
+                    <td>
+                    <button type="submit" class="btn btn-danger">DELETE</button>
+                    </td>
                 </tr>
+                <?php 
+              }
+            }
+            
+            else{
+              echo "No Record found";
+            }
+            
+            
+
+            ?>
+
             </tbody>
         </table>
     </div>
