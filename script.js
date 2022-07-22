@@ -15,8 +15,6 @@ btn.addEventListener("click", function () {
   ourRequest.send();
 });
 
-//animalContainer.textContent("hELLO");
-
 function renderHTML(data) {
   var htmlString = "";
 
