@@ -7,6 +7,7 @@ require_once "config.php";
 
 $jsondata = file_get_contents('uploads/generic.json');
 $array = json_decode($jsondata, true);
+print_r($array);
 
 //INSERT INTO MYPOIS
 
@@ -26,7 +27,7 @@ foreach($array as $temp){
     $populartimes = $temp["populartimes"];
 
     $stmt -> execute();
-    mysqli_stmt_close($stmt);
+    $mysqli -> close();
 }
 
 
@@ -44,7 +45,7 @@ foreach($array as $temp){
     $longtitude = $temp["longtitude"];
 
     $stmt -> execute();
-    mysqli_stmt_close($stmt);
+    $mysqli -> close();
 }
 
 
@@ -60,7 +61,7 @@ $stmt -> bind_param("s", $poi_type_name);
 foreach($array as $temp){
     $poi_type_name = $temp["types"];
     $stmt -> execute();
-    mysqli_stmt_close($stmt);
+    $mysqli -> close();
 }
 
 
