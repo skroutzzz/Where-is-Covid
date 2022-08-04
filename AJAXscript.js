@@ -1,8 +1,39 @@
+//Upload JSON File in php
+
+const myForm = document.getElementById("myForm");
+const inpFile = document.getElementById("inpFile");
+
+myForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const endpoint = "upload.php";
+  const formData = new FormData();
+
+  console.log(inpFile.files);
+
+  formData.append("inpFile", inpFile.files[0]);
+
+  fetch(endpoint, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: (formData) => new FormData(), //(data) => new data(formData),
+  }).catch(console.error);
+});
+
+//
+// PREVIOUS
+
+//Parse JSON and print in html
+
+/*
+
 var btn = document.getElementById("load");
 btn.addEventListener("click", function () {
   var ourRequest = new XMLHttpRequest();
   //ourRequest.onload = reqListener;
-  ourRequest.open("GET", "uploads/generic.json", "true");
+  ourRequest.open("GET", data(formData), "true");
   ourRequest.onload = function () {
     var ourData = JSON.parse(ourRequest.responseText);
     //console.log(ourData);
@@ -21,19 +52,6 @@ function renderHTML(data) {
   document
     .getElementById("content")
     .insertAdjacentHTML("beforeend", htmlString);
-}
-
-/*
-function renderHTML(data) {
-  var htmlString = "";
-
-  for (i = 0; i < data.length; i++) {
-    htmlString += "<p>" + data[i].name + "is a " + data[i].species + "</p>";
-  }
-  document
-    .getElementById("animal-info")
-    .insertAdjacentHTML("beforeend", htmlString);
-  //animalContainer.insertAdjacentHTML("beforeend", htmlString);
 }
 
 */
