@@ -11,16 +11,50 @@ myForm.addEventListener("submit", (e) => {
 
   console.log(inpFile.files);
 
-  formData.append("inpFile", inpFile.files[0]);
+  formData.append("inpFile", JSON.stringify(inpFile.files[0]));
 
+  console.log(formData);
+
+  $.ajax({
+    url: "upload.php",
+    dataType: "text",
+    type: "POST",
+    data: { formData: formData },
+    success: function (response) {
+      // window.location = "../index.php"
+      console.log(response);
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+});
+
+/*
   fetch(endpoint, {
     method: "post",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: (formData) => new FormData(), //(data) => new data(formData),
-  }).catch(console.error);
+    headers: { "Content-Type": "application/json" },
+    body: formData,
+  })
+    .then((Response) => Response.JSON())
+    .then((result) => {
+      console.log("Sucess:", result);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 });
+
+*/
+/*
+  .then(function (response) {
+      return response.text();
+    })
+    .then(function (body) {
+      console.log(body);
+    });
+});
+*/
 
 //
 // PREVIOUS

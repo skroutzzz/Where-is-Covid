@@ -11,8 +11,54 @@
     </form>
 
     <button id="load">Fetch Info</button>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script>
+      const myForm = document.getElementById("myForm");
+      const inpFile = document.getElementById("inpFile");
 
-    <script src="AJAXscript.js"></script>
+      myForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const endpoint = "upload.php";
+        //const formData = new FormData();
+
+        console.log(inpFile.files);
+
+        var fileReader = new FileReader();
+        var file;
+        fileReader.readAsText(inpFile.files[0]);
+        fileReader.onload = function () {
+          file = JSON.parse(fileReader.result);
+          console.log(file);
+        };
+
+        fileReader.onloadend = function () {
+          var formData = JSON.stringify(file);
+          $.ajax({
+            url: "upload.php",
+            dataType: "text",
+            type: "POST",
+            data: { formData: formData },
+            success: function (response) {
+              // window.location = "../index.php"
+              console.log(response);
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        };
+
+        //formData.append("inpFile", JSON.stringify(inpFile.files[0]));
+
+        //console.log(formData);
+      });
+    </script>
     <div id="content"></div>
   </body>
 </html>

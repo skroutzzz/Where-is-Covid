@@ -2,10 +2,55 @@
 
 require_once "config.php";
 
-//$targetPath = "uploads/" . basename($_FILES["inpFile"]["name"]);
-//move_uploaded_file($_FILES["inpFile"]["tmp_name"], $targetPath);
+header('Content-Type: text/plain');
 
-$jsondata = file_get_contents('uploads/generic.json');
+if(isset($_POST['formData'])){
+    $received = utf8_encode($_POST['formData']);
+    $pois = json_decode($received);
+   // print_r($pois);
+ 
+    foreach($pois as $temp){
+        $poi_id = $temp->id;
+        $poi_name = $temp->name;
+        $poi_address = $temp->address;
+        $rating = $temp->rating;
+        $rating_n = $temp->rating_n;
+        $populartimes = json_encode($temp->populartimes);
+       
+       $insert_pois = "INSERT INTO mypois(poi_id, poi_name, poi_address, rating, rating_n, populartimes)
+        VALUES ('$poi_id', '$poi_name', '$poi_address', '$rating', '$rating_n', '$populartimes');";
+     
+     try {
+        $stmt = mysqli_stmt_init($link);
+        mysqli_stmt_prepare($stmt, $insert_pois);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        echo "[SQL Success]";
+    }
+    catch (Exception $err) {
+        echo "[SQL Failed]";
+        die;
+    }
+
+    }
+
+
+   
+}
+
+
+
+
+/*
+
+
+$targetPath = "uploads/" . basename($_FILES["inpFile"]["name"]);
+move_uploaded_file($_FILES["inpFile"]["tmp_name"], $targetPath);
+
+$mygetter = $_POST["FormData"];
+
+$jsondata = file_get_contents($mygetter);
+//$jsondata = file_get_contents('uploads/generic.json');
 $array = json_decode($jsondata, true);
 print_r($array);
 
@@ -30,7 +75,9 @@ foreach($array as $temp){
     $mysqli -> close();
 }
 
+*/
 
+/*
 //INSERT INTO MYCOORD
 
 $stmt = $mysqli -> prepare("
@@ -64,5 +111,5 @@ foreach($array as $temp){
     $mysqli -> close();
 }
 
-
+*/
 ?>
