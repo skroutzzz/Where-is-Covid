@@ -9,6 +9,8 @@ if(isset($_POST['formData'])){
     $pois = json_decode($received);
    // print_r($pois);
  
+    
+
     foreach($pois as $temp){
         $poi_id = $temp->id;
         $poi_name = $temp->name;
@@ -16,13 +18,31 @@ if(isset($_POST['formData'])){
         $rating = $temp->rating;
         $rating_n = $temp->rating_n;
         $populartimes = json_encode($temp->populartimes);
+        $latitude = $temp->coordinates->lat;
+        $longtitude = $temp->coordinates->lng;
+        //$types = json_decode($temp->types);
+        
+        $poi_types = json_encode($temp->types);
+        $i = 0;
+        foreach($poi_types as $types){
+            $poi_types = $types[$i];
+            $i++;
+        }
        
-       $insert_pois = "INSERT INTO mypois(poi_id, poi_name, poi_address, rating, rating_n, populartimes)
-        VALUES ('$poi_id', '$poi_name', '$poi_address', '$rating', '$rating_n', '$populartimes');";
+       $insert_pois = "INSERT INTO mypois(poi_id, poi_name, poi_address, rating, rating_n, populartimes, latitude, longtitude)
+        VALUES ('$poi_id', '$poi_name', '$poi_address', '$rating', '$rating_n', '$populartimes', $latitude, $longtitude);";
+
+       $insert_types = "INSERT INTO mypois_type(poi_type_id, poi_type_name)
+       VALUES ('$poi_id','$poi_types');";
      
      try {
         $stmt = mysqli_stmt_init($link);
         mysqli_stmt_prepare($stmt, $insert_pois);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        echo "[SQL Success]";
+        $stmt = mysqli_stmt_init($link);
+        mysqli_stmt_prepare($stmt, $insert_types);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         echo "[SQL Success]";

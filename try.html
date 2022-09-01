@@ -24,9 +24,6 @@
       myForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const endpoint = "upload.php";
-        //const formData = new FormData();
-
         console.log(inpFile.files);
 
         var fileReader = new FileReader();
@@ -53,10 +50,6 @@
             },
           });
         };
-
-        //formData.append("inpFile", JSON.stringify(inpFile.files[0]));
-
-        //console.log(formData);
       });
     </script>
     <div id="content"></div>

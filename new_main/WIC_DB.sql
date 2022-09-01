@@ -18,13 +18,15 @@ CREATE TABLE  myPOIS(
 			poi_address text,
 			rating int,
 			rating_n int,
-			populartimes text		
+			populartimes text,
+			latitude float,
+			longtitude float	
 
 );
 
 CREATE TABLE myPOIS_TYPE(
 
-			type_id int NOT NULL PRIMARY KEY,
+			type_id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
 			poi_type_id varchar(128),
 			poi_type_name text,
 			CONSTRAINT POI_TYPE FOREIGN KEY (poi_type_id) REFERENCES myPOIS (poi_id)
@@ -61,6 +63,9 @@ CREATE TABLE  myCOVID(
 
 
 
+/*
+
+
 
 CREATE TABLE  myCOORD(
 
@@ -72,7 +77,7 @@ CREATE TABLE  myCOORD(
 			ON UPDATE CASCADE
 );
 
-
+*/
 
 --INSERT INTO  myUSERS
 --VALUES ('1','StavrouI','$2y$10$MzwhZvaoupJClUD0VNJzmubGmjBb90K6REAIC.eXEMxvDm0nOXkpm','stavroujohn@gmail.com','1'),
