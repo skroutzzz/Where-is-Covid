@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS wic_db;
 
 CREATE TABLE  myUSERS (
 
-			user_id int NOT NULL PRIMARY KEY,
+			user_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			user_username varchar(128) NOT NULL,
 			user_password varchar(128) NOT NULL,
 			user_email varchar(128) NOT NULL,
