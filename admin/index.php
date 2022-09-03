@@ -12,6 +12,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <?php  
 include('includes/header.php');
 include('includes/navbar.php');
+require_once "config.php";
 
 ?>
 
@@ -35,23 +36,67 @@ include('includes/navbar.php');
 
       <!-- Topbar Search -->
       <form
+        action="" method="GET" name="" 
         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
       >
         <div class="input-group">
           <input
             type="text"
+            name="k"
             class="form-control bg-light border-0 small"
             placeholder="Search for..."
+            autocomplete="off"
             aria-label="Search"
             aria-describedby="basic-addon2"
           />
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
+            <button class="btn btn-primary" type="submit" name="search" value="Search">
               <i class="fas fa-search fa-sm"></i>
             </button>
           </div>
         </div>
       </form>
+
+      <?php 
+          require_once "config.php";
+
+          if (isset($_GET['k']) && $_GET['k'] != ''){
+
+            $k =trim($_GET['k']);
+
+            $display_words = "";
+
+            $keywords = explode(' ', $k);
+            foreach($keywords as $word){
+              $query_string = " SELECT * FROM mypois WHERE poi_name LIKE '%" .$word. "%' ";
+              
+              $display_words .= $word." ";
+            }
+
+            $query = mysqli_query($link, $query_string);
+            $result_count = mysqli_num_rows($query);
+
+            if($result_count>0){
+              
+              echo 'Your search for <i> &nbsp;' .$display_words.' </i> <hr /><br />';
+              echo $result_count;
+
+              while($row = mysqli_fetch_assoc($query)){
+
+                echo '<tr>
+                      <td><h3>&nbsp;'.$row['poi_name'].'</h3></td>
+                      </tr>';
+                
+              }
+                          
+            }
+            else
+              echo 'No results found';
+          }
+          else 
+            echo 'Nope';
+
+      ?>
 
       <!-- Topbar Navbar -->
       <ul class="navbar-nav ml-auto">
