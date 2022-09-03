@@ -51,22 +51,23 @@
           crossOrigin: true,
         }
       ).addTo(map);
+      
 
-      var marker = L.marker([51.5, -0.09]).addTo(map);
+      map.locate({setView: true, maxZoom: 16});
+      function onLocationFound(e) {
+      var radius = e.accuracy;
 
-      var circle = L.circle([51.508, -0.11], {
-        color: "red",
-        fillColor: "#f03",
-        fillOpacity: 0.5,
-        radius: 500,
-      }).addTo(map);
+      L.marker(e.latlng).addTo(map)
+      .bindPopup("You are within 20 meters from this point").openPopup();
 
-      var polygon = L.polygon([
-        [51.509, -0.08],
-        [51.503, -0.06],
-        [51.51, -0.047],
-      ]).addTo(map);
+       L.circle(e.latlng, 10,{color: "red",}).addTo(map);
+      }
 
+      map.on('locationfound', onLocationFound);
+
+
+
+      
       marker.bindPopup("<b> Hey there! </b><br>I am a marker.").openPopup();
       circle.bindPopup("I am a circle");
       polygon.bindPopup("I am polygon");
