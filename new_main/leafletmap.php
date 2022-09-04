@@ -1,3 +1,4 @@
+<?php include 'insertdatamap.php' ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -21,6 +22,12 @@
     </style>
   </head>
   <body>
+  <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <div id="map">
       <a
         href="https://www.maptiler.com"
@@ -65,20 +72,56 @@
       }
 
       map.on("locationfound", onLocationFound);
-
-
-
-      $.getJSON('insertdatamap.php', function(data) {
-
-      $.each(data, function(key, place) {
-          var marker = L.marker([place.latitude, place.longitude]).addTo(map);
-       });
-
-      });
       
-      marker.bindPopup("<b> Hey there! </b><br>I am a marker.").openPopup();
-      circle.bindPopup("I am a circle");
-      polygon.bindPopup("I am polygon");
+    let activities =[[38.2377, 21.7259],[38.2499, 21.7391],[38.2368, 21.7259],[38.2506, 21.7399],[38.2506, 21.7373],[38.2497, 21.7391],[38.2501, 21.7379],[38.25, 21.738],[38.2377, 21.7259],[38.2504, 21.7385],[38.2496, 21.7399],[38.2502, 21.7398],[38.2501, 21.7395],[38.2505, 21.7373],[38.2497, 21.7374],[38.2498, 21.7389],[38.2497, 21.7391]]; 
+
+console.table(activities);
+
+    $.ajax(
+    'insertdatamap.php',
+    {
+      success: function(data) {
+        alert('AJAX call was successful!');
+        alert('Data from the server' + data);
+        var latlong = <?= echo json_encode($data); ?>;
+        latlong = Object.values(latlong);
+        console.table(latlong);
+        for ( var i = 0; i < latlong.length; i ++) { 
+        marker = new L.marker([latlong[i][1],latlong[i][2]])
+      .addTo(map);
+      }
+      },
+      error: function() {
+        alert('There was some error performing the AJAX call!');
+      }
+   }
+      );
+
+
+
+/*
+      $.ajax({
+            url: "insertdatamap.php",
+            dataType: "text",
+            type: "GET",
+            data: { data: data },
+            success: function (response) {
+              // window.location = "../index.php"
+              console.log(response);
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        
+*/
+
+
+
+
+
+
+
     </script>
   </body>
 </html>

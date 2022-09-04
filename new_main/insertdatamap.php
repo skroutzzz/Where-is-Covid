@@ -1,31 +1,31 @@
 <?php
-/* Database credentials. Assuming you are running MySQL
-server with default setting (user 'root' with no password) */
 
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
-define('DB_NAME', 'wic_db');
- 
-/* Attempt to connect to MySQL database */
-$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
- 
-// Check connection
-if($link === false){
-    die("ERROR: Could not connect. " . mysqli_connect_error());
-}
+require_once "config.php";
 
-$sql = "Select * from mypois";
-$result = $conn->query($sql);
+$sql = "SELECT latitude,longtitude FROM `mypois`";
 
-if ($result->num_rows > 0) {
+$query = mysqli_query($link, $sql);
+$result_count = mysqli_num_rows($query);
+/*
+if ($result_count> 0) {
     // output data of each row
-    while($row = $result->fetch_assoc()) {
-      echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+    while($row = mysqli_fetch_assoc($query)) {
+      echo "LON: " . $row["longtitude"]. " - LAN: " . $row["latitude"]. "<br>";
     }
   } else {
     echo "0 results";
   }
-  $conn->close();
+  */
 
-?>
+  $data = array();
+    echo "  [ " ;
+
+for ( $x = 0; $x < $result_count; $x++) {
+    $data[] = mysqli_fetch_assoc( $query);
+    echo " [ " , $data[ $x][ 'latitude' ], " , " , $data[ $x][ 'longtitude' ], " ] " ;
+    if ( $x <= ( $result_count - 2) ) {
+        echo " , " ;
+    }
+}
+    echo " ]; " ;
+?> 
