@@ -67,6 +67,13 @@
 
 
 
+      $.getJSON('insertdatamap.php', function(data) {
+
+      $.each(data, function(key, place) {
+          var marker = L.marker([place.latitude, place.longitude]).addTo(map);
+       });
+
+      });
       
       marker.bindPopup("<b> Hey there! </b><br>I am a marker.").openPopup();
       circle.bindPopup("I am a circle");
