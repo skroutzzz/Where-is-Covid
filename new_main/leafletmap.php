@@ -73,22 +73,19 @@
 
       map.on("locationfound", onLocationFound);
       
-    let activities =[[38.2377, 21.7259],[38.2499, 21.7391],[38.2368, 21.7259],[38.2506, 21.7399],[38.2506, 21.7373],[38.2497, 21.7391],[38.2501, 21.7379],[38.25, 21.738],[38.2377, 21.7259],[38.2504, 21.7385],[38.2496, 21.7399],[38.2502, 21.7398],[38.2501, 21.7395],[38.2505, 21.7373],[38.2497, 21.7374],[38.2498, 21.7389],[38.2497, 21.7391]]; 
-
-console.table(activities);
-
+      
     $.ajax(
     'insertdatamap.php',
     {
       success: function(data) {
         alert('AJAX call was successful!');
         alert('Data from the server' + data);
-        var latlong = <?= echo json_encode($data); ?>;
-        latlong = Object.values(latlong);
-        console.table(latlong);
+        var latlong = <?php echo json_encode($data,JSON_NUMERIC_CHECK); ?>;
         for ( var i = 0; i < latlong.length; i ++) { 
-        marker = new L.marker([latlong[i][1],latlong[i][2]])
+       marker = new L.marker(Object.values(latlong[i]))
       .addTo(map);
+      console.log((Object.values(latlong[i])));
+        
       }
       },
       error: function() {
