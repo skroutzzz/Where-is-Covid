@@ -2,7 +2,7 @@
 
 require_once "config.php";
 
-$sql = "SELECT latitude,longtitude FROM `mypois`";
+$sql = "SELECT * FROM `mypois`";
 
 $query = mysqli_query($link, $sql);
 $result_count = mysqli_num_rows($query);

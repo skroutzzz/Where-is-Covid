@@ -1,5 +1,6 @@
 
 DROP DATABASE IF EXISTS wic_db;
+CREATE DATABASE wic_db;
 
 CREATE TABLE  myUSERS (
 
@@ -14,7 +15,7 @@ CREATE TABLE  myUSERS (
 CREATE TABLE  myPOIS(	
 
 			poi_id varchar(128) NOT NULL PRIMARY KEY,
-			poi_name text,
+			poi_name varchar(128),
 			poi_address text,
 			rating int,
 			rating_n int,

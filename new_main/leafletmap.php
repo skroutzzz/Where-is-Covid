@@ -81,9 +81,37 @@
         alert('AJAX call was successful!');
         alert('Data from the server' + data);
         var latlong = <?php echo json_encode($data,JSON_NUMERIC_CHECK); ?>;
+        console.log((Object.values(latlong[1])));
+
+       
+
+
+
         for ( var i = 0; i < latlong.length; i ++) { 
-       marker = new L.marker(Object.values(latlong[i]))
-      .addTo(map);
+        let result1 = '';
+        Object.entries(latlong[i]).find(([key, value]) => {
+        if (key === 'latitude') {
+        result1 = value;
+          }
+        });
+        console.log(result1);
+        let result2 = '';
+        Object.entries(latlong[i]).find(([key, value]) => {
+        if (key === 'longtitude') {
+        result2 = value;
+          }
+        });
+        let result3 = '';
+        Object.entries(latlong[i]).find(([key, value]) => {
+        if (key === 'poi_name') {
+        result3 = value;
+          }
+        });
+        console.log(result2);
+       marker = new L.marker(Object.values([result1,result2]))
+      .addTo(map)
+      .bindPopup(result3)
+      .openPopup();;
       console.log((Object.values(latlong[i])));
         
       }
