@@ -78,8 +78,6 @@
     'insertdatamap.php',
     {
       success: function(data) {
-        alert('AJAX call was successful!');
-        alert('Data from the server' + data);
         var latlong = <?php echo json_encode($data,JSON_NUMERIC_CHECK); ?>;
         console.log((Object.values(latlong[1])));
 
