@@ -262,21 +262,23 @@ require_once "config.php";
 
       map.on("locationfound", onLocationFound);
       
-       var poi_name = <?php echo json_encode($poi_name);?>
        
-       console.log(poi_name);
      
       
-    $.ajax(
+       $.ajax(
     'insertdatamap.php',
     {
       success: function(data) {
+
         var latlong = <?php echo json_encode($data,JSON_NUMERIC_CHECK); ?>;
+        var poi_name = <?php echo json_encode($poi_name);?>
+       
+       console.log(poi_name);
+        
+
         console.log((Object.values(latlong[1])));
 
        
-
-
 
         for ( var i = 0; i < latlong.length; i ++) { 
         let result1 = '';
@@ -304,12 +306,35 @@ require_once "config.php";
       .bindPopup(result3)
       .openPopup();;
       console.log((Object.values(latlong[i])));
-
-      
-      
         
       }
-      },
+
+      for(var i = 0; i < latlong.length; i ++)
+      {
+        Object.entries(latlong[i]).find(([key, value]) => {
+        if (key === poi_name) {
+        
+          let result5 = '';
+        Object.entries(latlong[i]).find(([key, value]) => {
+        if (key === 'latitude') {
+        result5 = value;
+          }
+        });
+        console.log(result1);
+        let result6 = '';
+        Object.entries(latlong[i]).find(([key, value]) => {
+        if (key === 'longtitude') {
+        result6 = value;
+          }
+        });
+        L.marker(Object.values([result5,result6]))
+        .openPopup();;
+        console.log((Object.values(latlong[i])));
+          }
+
+        });
+      }
+    },
       error: function() {
         alert('There was some error performing the AJAX call!');
       }
