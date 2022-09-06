@@ -36,7 +36,7 @@ require_once "config.php";
 
       <!-- Topbar Search -->
       <form
-        action="" method="GET" name="" 
+        action="" method="GET" name="" id="form"
         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
       >
         <div class="input-group">
@@ -50,7 +50,7 @@ require_once "config.php";
             aria-describedby="basic-addon2"
           />
           <div class="input-group-append">
-            <button class="btn btn-primary" type="submit" name="search" value="Search">
+            <button class="btn btn-primary" type="submit" name="search" id="search" value="Search">
               <i class="fas fa-search fa-sm"></i>
             </button>
           </div>
@@ -84,9 +84,11 @@ require_once "config.php";
               echo $result_count;
 
               while($row = mysqli_fetch_assoc($query)){
-
+                    $poi_name = $row['poi_name'];
+                    $lat =  $row['latitude'];
+                    $lng = $row['longtitude'];
                 echo '<tr>
-                      <td><h3>&nbsp;'.$row['poi_name'].'</h3></td>
+                      <td><h3>&nbsp;'.$poi_name.'</h3></td>
                       </tr>';
                 
               }
@@ -260,6 +262,10 @@ require_once "config.php";
 
       map.on("locationfound", onLocationFound);
       
+       var poi_name = <?php echo json_encode($poi_name);?>
+       
+       console.log(poi_name);
+     
       
     $.ajax(
     'insertdatamap.php',
@@ -298,6 +304,9 @@ require_once "config.php";
       .bindPopup(result3)
       .openPopup();;
       console.log((Object.values(latlong[i])));
+
+      
+      
         
       }
       },
@@ -307,40 +316,22 @@ require_once "config.php";
    }
       );
 
-
-
-/*
-      $.ajax({
-            url: "insertdatamap.php",
-            dataType: "text",
-            type: "GET",
-            data: { data: data },
-            success: function (response) {
-              // window.location = "../index.php"
-              console.log(response);
-            },
-            error: function (error) {
-              console.log(error);
-            },
-          });
-        
-*/
-
-
-
-
-
-
-
     </script>
     </body>
-
 
     </div>
     <!-- /.container-fluid -->
   </div>
   <!-- End of Main Content -->
+  <script>
+      
 
+      document.getElementById("search").addEventListener("click", function(){
+        console.log("yes");
+      })
+
+      
+    </script>
 
 <?php 
 
