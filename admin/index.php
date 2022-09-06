@@ -207,8 +207,15 @@ require_once "config.php";
           Report</a
         >
       </div>
-
-      <div id="map">
+      <?php include 'insertdatamap.php' ?>
+  <body>
+  <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <div id="map">
       <a
         href="https://www.maptiler.com"
         style="position: absolute; left: 10px; bottom: 10px; z-index: 999"
@@ -252,12 +259,82 @@ require_once "config.php";
       }
 
       map.on("locationfound", onLocationFound);
+      
+      
+    $.ajax(
+    'insertdatamap.php',
+    {
+      success: function(data) {
+        var latlong = <?php echo json_encode($data,JSON_NUMERIC_CHECK); ?>;
+        console.log((Object.values(latlong[1])));
 
-      marker.bindPopup("<b> Hey there! </b><br>I am a marker.").openPopup();
-      circle.bindPopup("I am a circle");
-      polygon.bindPopup("I am polygon");
+       
+
+
+
+        for ( var i = 0; i < latlong.length; i ++) { 
+        let result1 = '';
+        Object.entries(latlong[i]).find(([key, value]) => {
+        if (key === 'latitude') {
+        result1 = value;
+          }
+        });
+        console.log(result1);
+        let result2 = '';
+        Object.entries(latlong[i]).find(([key, value]) => {
+        if (key === 'longtitude') {
+        result2 = value;
+          }
+        });
+        let result3 = '';
+        Object.entries(latlong[i]).find(([key, value]) => {
+        if (key === 'poi_name') {
+        result3 = value;
+          }
+        });
+        console.log(result2);
+       marker = new L.marker(Object.values([result1,result2]))
+      .addTo(map)
+      .bindPopup(result3)
+      .openPopup();;
+      console.log((Object.values(latlong[i])));
+        
+      }
+      },
+      error: function() {
+        alert('There was some error performing the AJAX call!');
+      }
+   }
+      );
+
+
+
+/*
+      $.ajax({
+            url: "insertdatamap.php",
+            dataType: "text",
+            type: "GET",
+            data: { data: data },
+            success: function (response) {
+              // window.location = "../index.php"
+              console.log(response);
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        
+*/
+
+
+
+
+
+
+
     </script>
-      <!-- Content Row -->
+    </body>
+
 
     </div>
     <!-- /.container-fluid -->
