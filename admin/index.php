@@ -27,6 +27,8 @@ require_once "config.php";
       class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
     >
       <!-- Sidebar Toggle (Topbar) -->
+
+      <div id="pure-button"></div>
       <button
         id="sidebarToggleTop"
         class="btn btn-link d-md-none rounded-circle mr-3"
@@ -36,7 +38,7 @@ require_once "config.php";
 
       <!-- Topbar Search -->
       <form
-        action="" method="GET" name="" id="form"
+        action="" method="POST" name="" id="form"
         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
       >
         <div class="input-group">
@@ -50,7 +52,7 @@ require_once "config.php";
             aria-describedby="basic-addon2"
           />
           <div class="input-group-append">
-            <button class="btn btn-primary" type="submit" name="search" id="search" value="Search">
+            <button class="btn btn-primary" type="submit" name="search" id="submit" value="Search">
               <i class="fas fa-search fa-sm"></i>
             </button>
           </div>
@@ -60,9 +62,9 @@ require_once "config.php";
       <?php 
           require_once "config.php";
 
-          if (isset($_GET['k']) && $_GET['k'] != ''){
+          if (isset($_POST['k']) && $_POST['k'] != ''){
 
-            $k =trim($_GET['k']);
+            $k =trim($_POST['k']);
 
             $display_words = "";
 
@@ -75,6 +77,8 @@ require_once "config.php";
 
             $query = mysqli_query($link, $query_string);
             $result_count = mysqli_num_rows($query);
+
+          
 
             if($result_count>0){
 
@@ -100,6 +104,16 @@ require_once "config.php";
         
 
       ?>
+
+ 
+<div class="wrapper">
+    <button class="pure-button">Get my location</button>
+</div>
+    
+
+
+
+
 
       <!-- Topbar Navbar -->
       <ul class="navbar-nav ml-auto">
@@ -235,50 +249,81 @@ require_once "config.php";
       >
     </p>
     <script>
-      var map = L.map("map").setView([0, 0], 1);
-      L.tileLayer(
-        "https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=m4UDU1L0NSzWbDH7I0Ir",
-        {
-          tileSize: 512,
-          zoomOffset: -1,
-          minZoom: 15,
-          attribution:
-            '\u003ca href="https://www.maptiler.com/copyright/" target="_blank"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href="https://www.openstreetmap.org/copyright" target="_blank"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e',
-          crossOrigin: true,
-        }
-      ).addTo(map);
+     var map = L.map('map').fitWorld();
 
-      map.locate({ setView: true, maxZoom: 16 });
+   
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+    }).addTo(map);
+      
+    map.setView([37.983810,23.727539],6);
+
+
+
+
+    $('.pure-button').on('click', function(){
+    map.locate({setView: true, maxZoom: 15});
+    });
+
+    map.on('locationfound', onLocationFound);
+    function onLocationFound(e) {
+    console.log(e); 
+    L.marker(e.latlng).addTo(map)
+    .bindPopup("You are within 20 meters from this point")
+    .openPopup();
+
+          
+        
+          L.circle(e.latlng, 10, { color: "red" }).addTo(map);
+       
+      }
+  
+
+    /*
+      map.locate({ setView: true, maxZoom: 13 });
       function onLocationFound(e) {
-        var radius = e.accuracy;
 
-        L.marker(e.latlng)
+        var myloc = L.marker(e.latlng)
           .addTo(map)
           .bindPopup("You are within 20 meters from this point")
           .openPopup();
 
-        L.circle(e.latlng, 10, { color: "red" }).addTo(map);
+          
+        
+          L.circle(e.latlng, 10, { color: "red" }).addTo(map);
+       
       }
 
       map.on("locationfound", onLocationFound);
       
-       
-     
+      map.locate({ setView: false, maxZoom: 16 });
+     */
       
        $.ajax(
     'insertdatamap.php',
-    {
+    { 
       success: function(data) {
 
-        var latlong = <?php echo json_encode($data,JSON_NUMERIC_CHECK); ?>;
-        var poi_name = <?php echo json_encode($poi_name);?>
-       
-       console.log(poi_name);
         
 
-        console.log((Object.values(latlong[1])));
+        var latlong = <?php echo json_encode($data,JSON_NUMERIC_CHECK); ?>;
 
+
+        //console.log((Object.values(latlong[1])));
+   
+        var display_words = '<?php 
+        if (isset($_POST['k']) && $_POST['k'] != ''){
+        echo $poi_name; }
+        ?>';
+        console.log(display_words);
+        
+        const array_map=[];
+
+        //var display_words = '';
        
+        //console.log(display_words);
 
         for ( var i = 0; i < latlong.length; i ++) { 
         let result1 = '';
@@ -287,7 +332,7 @@ require_once "config.php";
         result1 = value;
           }
         });
-        console.log(result1);
+        //console.log(result1);
         let result2 = '';
         Object.entries(latlong[i]).find(([key, value]) => {
         if (key === 'longtitude') {
@@ -300,36 +345,46 @@ require_once "config.php";
         result3 = value;
           }
         });
-        console.log(result2);
-       marker = new L.marker(Object.values([result1,result2]))
+        //console.log(result2);
+       array_map[i] = new L.marker(Object.values([result1,result2]))
       .addTo(map)
-      .bindPopup(result3)
-      .openPopup();;
-      console.log((Object.values(latlong[i])));
+      .bindPopup(result3);
+      //console.log((Object.values(latlong[i])));
         
+      
       }
 
       for(var i = 0; i < latlong.length; i ++)
-      {
+      { let result7 = ''
         Object.entries(latlong[i]).find(([key, value]) => {
-        if (key === poi_name) {
-        
+        if (value === display_words) {
+        result7 = value
           let result5 = '';
         Object.entries(latlong[i]).find(([key, value]) => {
         if (key === 'latitude') {
         result5 = value;
           }
         });
-        console.log(result1);
+        console.log(result5);
         let result6 = '';
         Object.entries(latlong[i]).find(([key, value]) => {
         if (key === 'longtitude') {
         result6 = value;
           }
         });
-        L.marker(Object.values([result5,result6]))
-        .openPopup();;
-        console.log((Object.values(latlong[i])));
+        console.log(result6);
+
+        
+        marker = L.marker(Object.values([result5,result6]))
+        .addTo(map)
+        .bindPopup(result7)
+        .openPopup();
+        
+        
+        map.setView([result5,result6], 19);
+
+        //map.flyTo(setView(result5,result6));
+       // console.log((Object.values(latlong[i])));
           }
 
         });
@@ -351,10 +406,7 @@ require_once "config.php";
   <script>
       
 
-      document.getElementById("search").addEventListener("click", function(){
-        console.log("yes");
-      })
-
+    
       
     </script>
 
