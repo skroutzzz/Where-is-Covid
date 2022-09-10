@@ -307,34 +307,6 @@ require_once "config.php";
        
         //console.log(display_words);
 
-      //   for ( var i = 0; i < latlong.length; i ++) { 
-      //   let result1 = '';
-      //   Object.entries(latlong[i]).find(([key, value]) => {
-      //   if (key === 'latitude') {
-      //   result1 = value;
-      //     }
-      //   });
-      //   //console.log(result1);
-      //   let result2 = '';
-      //   Object.entries(latlong[i]).find(([key, value]) => {
-      //   if (key === 'longtitude') {
-      //   result2 = value;
-      //     }
-      //   });
-      //   let result3 = '';
-      //   Object.entries(latlong[i]).find(([key, value]) => {
-      //   if (key === 'poi_name') {
-      //   result3 = value;
-      //     }
-      //   });
-      //   //console.log(result2);
-      //  array_map[i] = new L.marker(Object.values([result1,result2]))
-      // .addTo(map)
-      // .bindPopup(result3);
-      //console.log((Object.values(latlong[i])));
-        
-      
-     // }
 
       for(var i = 0; i < latlong.length; i ++)
       { let result7 = ''
@@ -364,6 +336,36 @@ require_once "config.php";
         
         
         map.setView([result5,result6], 19);
+
+        
+        for ( var k = 0; k < latlong.length; k ++) { 
+          let result1 = '';
+          Object.entries(latlong[k]).find(([key, value]) => {
+          if (key === 'latitude') {
+          result1 = value;
+            }
+          });
+           console.log(result1);
+          let result2 = '';
+          Object.entries(latlong[k]).find(([key, value]) => {
+          if (key === 'longtitude') {
+          result2 = value;
+            }
+          });
+          let result3 = '';
+          Object.entries(latlong[k]).find(([key, value]) => {
+          if (key === 'poi_name') {
+          result3 = value;
+            }
+          });
+           console.log(result2);
+         array_map[k] = new L.marker(Object.values([result1,result2]))
+        .addTo(map)
+        .bindPopup(result3);
+       console.log((Object.values(latlong[k])));
+        
+      
+       }
 
         //map.flyTo(setView(result5,result6));
        // console.log((Object.values(latlong[i])));
