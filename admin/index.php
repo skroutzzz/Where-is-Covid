@@ -28,13 +28,7 @@ require_once "config.php";
     >
       <!-- Sidebar Toggle (Topbar) -->
 
-      <div id="pure-button"></div>
-      <button
-        id="sidebarToggleTop"
-        class="btn btn-link d-md-none rounded-circle mr-3"
-      >
-        <i class="fa fa-bars"></i>
-      </button>
+      
 
       <!-- Topbar Search -->
       <form
@@ -104,15 +98,6 @@ require_once "config.php";
         
 
       ?>
-
- 
-<div class="wrapper">
-    <button class="pure-button">Get my location</button>
-</div>
-    
-
-
-
 
 
       <!-- Topbar Navbar -->
@@ -216,12 +201,9 @@ require_once "config.php";
       <!-- Page Heading -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-        <a
-          href="#"
-          class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-          ><i class="fas fa-download fa-sm text-white-50"></i> Generate
-          Report</a
-        >
+       
+        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="pure-button"
+        >Get my location</button>
       </div>
       <?php include 'insertdatamap.php' ?>
   <body>
@@ -263,7 +245,7 @@ require_once "config.php";
 
 
 
-    $('.pure-button').on('click', function(){
+    $('#pure-button').on('click', function(){
     map.locate({setView: true, maxZoom: 15});
     });
 
@@ -325,34 +307,34 @@ require_once "config.php";
        
         //console.log(display_words);
 
-        for ( var i = 0; i < latlong.length; i ++) { 
-        let result1 = '';
-        Object.entries(latlong[i]).find(([key, value]) => {
-        if (key === 'latitude') {
-        result1 = value;
-          }
-        });
-        //console.log(result1);
-        let result2 = '';
-        Object.entries(latlong[i]).find(([key, value]) => {
-        if (key === 'longtitude') {
-        result2 = value;
-          }
-        });
-        let result3 = '';
-        Object.entries(latlong[i]).find(([key, value]) => {
-        if (key === 'poi_name') {
-        result3 = value;
-          }
-        });
-        //console.log(result2);
-       array_map[i] = new L.marker(Object.values([result1,result2]))
-      .addTo(map)
-      .bindPopup(result3);
+      //   for ( var i = 0; i < latlong.length; i ++) { 
+      //   let result1 = '';
+      //   Object.entries(latlong[i]).find(([key, value]) => {
+      //   if (key === 'latitude') {
+      //   result1 = value;
+      //     }
+      //   });
+      //   //console.log(result1);
+      //   let result2 = '';
+      //   Object.entries(latlong[i]).find(([key, value]) => {
+      //   if (key === 'longtitude') {
+      //   result2 = value;
+      //     }
+      //   });
+      //   let result3 = '';
+      //   Object.entries(latlong[i]).find(([key, value]) => {
+      //   if (key === 'poi_name') {
+      //   result3 = value;
+      //     }
+      //   });
+      //   //console.log(result2);
+      //  array_map[i] = new L.marker(Object.values([result1,result2]))
+      // .addTo(map)
+      // .bindPopup(result3);
       //console.log((Object.values(latlong[i])));
         
       
-      }
+     // }
 
       for(var i = 0; i < latlong.length; i ++)
       { let result7 = ''
