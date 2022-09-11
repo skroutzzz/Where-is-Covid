@@ -52,7 +52,7 @@ CREATE TABLE  myVISIT(
 
 CREATE TABLE  myCOVID(
 			
-			covid_id int NOT NULL PRIMARY KEY,
+			covid_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			cov_date date,
 			covid_userid int,
 			CONSTRAINT COVID_USER FOREIGN KEY (covid_userid) REFERENCES myUSERS (user_id)
