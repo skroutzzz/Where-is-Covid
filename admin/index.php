@@ -16,7 +16,58 @@ require_once "config.php";
 
 ?>
 
+<?php
 
+// Include config file
+require_once "config.php";
+
+if(isset($_POST["covid_button"])){
+
+    $covid_userid = $_SESSION["id"];
+    
+    $covid_date = $_POST["covid-date"];
+    
+   
+    $sql = "SELECT cov_date FROM mycovid";
+
+    $query = mysqli_query($link, $sql);
+    $result_count = mysqli_num_rows($query);
+    $data = mysqli_fetch_assoc($query);
+   
+
+    $difference = strtotime($covid_date)-strtotime($data["cov_date"]);
+   
+
+    if($difference/(24*60*60) > 14 ){
+
+        $insert_covid = "INSERT INTO mycovid(cov_date, covid_userid)
+        VALUES ('$covid_date', '$covid_userid');";
+    
+    
+    
+    try {
+    
+        $stmt = mysqli_stmt_init($link);
+        mysqli_stmt_prepare($stmt, $insert_covid);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+       
+       
+        
+        
+    }
+    catch (Exception $err) {
+ 
+        die;
+    }
+
+    }
+    
+   
+
+}
+
+?>
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -167,12 +218,42 @@ require_once "config.php";
       <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 
       <div class="my-2"></div>
-                                    <button class="btn btn-danger btn-icon-split" id="covid-case">
+                                    <button class="btn btn-danger btn-icon-split" id="covid-case" data-toggle="modal" data-target="#covid_case">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-exclamation-triangle"></i>
                                         </span>
                                         <span class="text">I have COVID-19</span>
                                     </button>
+
+                                    <div class="my-2"></div>
+<div class="modal fade" id="covid_case" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Covid Date</h5>
+        <button type="button" class="btn btn-danger btn-icon-split close " data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="index.php" name="covidForm" method="POST">
+
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label> Date of Covid </label>
+                <input type="date" name="covid-date" required class="form-control" placeholder="Enter Date">
+            </div>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" name="covid_button" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
        
         <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="pure-button"
         >Get my location</button>
