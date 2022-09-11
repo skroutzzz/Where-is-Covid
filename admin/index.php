@@ -361,9 +361,9 @@ require_once "config.php";
            console.log(result2);
          array_map[k] = new L.marker(Object.values([result1,result2]))
         .addTo(map)
-        .bindPopup(result3);
+        .bindPopup(result3 + '<br/><button type="button" class="btn btn-primary btn-icon-split">Click for more</button>');
        console.log((Object.values(latlong[k])));
-        
+       //btn btn-primary sidebar-open-button
       
        }
 
