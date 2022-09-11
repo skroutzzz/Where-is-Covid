@@ -58,7 +58,7 @@ require_once "config.php";
 
           if (isset($_POST['k']) && $_POST['k'] != ''){
 
-            $k =trim($_POST['k']);
+            $k = trim($_POST['k']);
 
             $display_words = "";
 
@@ -100,48 +100,12 @@ require_once "config.php";
       ?>
 
 
-      <!-- Topbar Navbar -->
-      <ul class="navbar-nav ml-auto">
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow d-sm-none">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="searchDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <i class="fas fa-search fa-fw"></i>
-          </a>
-          <!-- Dropdown - Messages -->
-          <div
-            class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-            aria-labelledby="searchDropdown"
-          >
-            <form class="form-inline mr-auto w-100 navbar-search">
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control bg-light border-0 small"
-                  placeholder="Search for..."
-                  aria-label="Search"
-                  aria-describedby="basic-addon2"
-                />
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li>
+      
 
         <!-- Nav Item - Alerts -->
-        
+       
 
+      
        
         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -201,6 +165,14 @@ require_once "config.php";
       <!-- Page Heading -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+
+      <div class="my-2"></div>
+                                    <button class="btn btn-danger btn-icon-split" id="covid-case">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </span>
+                                        <span class="text">I have COVID-19</span>
+                                    </button>
        
         <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="pure-button"
         >Get my location</button>
@@ -361,7 +333,7 @@ require_once "config.php";
            console.log(result2);
          array_map[k] = new L.marker(Object.values([result1,result2]))
         .addTo(map)
-        .bindPopup(result3 + '<br/><button type="button" class="btn btn-primary btn-icon-split">Click for more</button>');
+        .bindPopup(result3 + '<br/><button type="button" class="btn btn-primary btn-icon-split">I have visited this place</button>');
        console.log((Object.values(latlong[k])));
        //btn btn-primary sidebar-open-button
       
