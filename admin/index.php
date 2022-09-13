@@ -336,12 +336,41 @@ if(isset($_POST["covid_button"])){
       map.locate({ setView: false, maxZoom: 16 });
      */
       
-       $.ajax(
+    $.ajax(
     'insertdatamap.php',
     { 
       success: function(data) {
 
+       
         
+        var redIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+	      iconSize: [25, 41],
+	      iconAnchor: [12, 41],
+	      popupAnchor: [1, -34],
+	      shadowSize: [41, 41]
+        });
+
+        var blueIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+	      iconSize: [25, 41],
+	      iconAnchor: [12, 41],
+	      popupAnchor: [1, -34],
+	      shadowSize: [41, 41]
+        });
+
+        var yellowIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+         });
+
+        var icon1 = '';
 
         var latlong = <?php echo json_encode($data,JSON_NUMERIC_CHECK); ?>;
 
@@ -355,6 +384,7 @@ if(isset($_POST["covid_button"])){
         console.log(display_words);
         
         const array_map=[];
+        var icon1 = '';
 
         //var display_words = '';
        
@@ -365,31 +395,24 @@ if(isset($_POST["covid_button"])){
       { let result7 = ''
         Object.entries(latlong[i]).find(([key, value]) => {
         if (value === display_words) {
-        result7 = value
+        result7 = value;
           let result5 = '';
         Object.entries(latlong[i]).find(([key, value]) => {
         if (key === 'latitude') {
         result5 = value;
           }
         });
-        console.log(result5);
+        //console.log(result5);
         let result6 = '';
         Object.entries(latlong[i]).find(([key, value]) => {
         if (key === 'longtitude') {
         result6 = value;
           }
         });
-        console.log(result6);
+
 
         
-        marker = L.marker(Object.values([result5,result6]))
-        .addTo(map)
-        .bindPopup(result7)
-        .openPopup();
-        
-        
-        map.setView([result5,result6], 19);
-
+       
         
         for ( var k = 0; k < latlong.length; k ++) { 
           let result1 = '';
@@ -398,7 +421,6 @@ if(isset($_POST["covid_button"])){
           result1 = value;
             }
           });
-           console.log(result1);
           let result2 = '';
           Object.entries(latlong[k]).find(([key, value]) => {
           if (key === 'longtitude') {
@@ -411,17 +433,44 @@ if(isset($_POST["covid_button"])){
           result3 = value;
             }
           });
-           console.log(result2);
-         array_map[k] = new L.marker(Object.values([result1,result2]))
+
+
+
+       ///POPULARTIMES
+        let result10 = '';
+        Object.entries(latlong[k]).find(([key, value]) => {
+        if (key  === 'populartimes') {
+        result10 = value;
+        var date = new Date();
+        var hour = date.getHours();
+        var day = date.getDay();
+        var res = JSON.parse(result10);
+        console.log(res);
+        console.log(res[day-1].data[hour]);
+        if(res[day-1].data[hour]>66)
+          {icon1 = redIcon;}
+        else if(res[day-1].data[hour]>33)
+        {icon1 = yellowIcon;}
+        else {icon1 = blueIcon;}
+
+        marker = L.marker(Object.values([result5,result6]))
+        .addTo(map)
+        .bindPopup(result7 + '<br/><button type="button" class="btn btn-primary btn-icon-split">I have visited this place</button>')
+        .openPopup();
+        
+        
+        map.setView([result5,result6], 19);
+
+        
+           }
+        }); 
+
+         marker = new L.marker(Object.values([result1,result2]) ,{icon: icon1})
         .addTo(map)
         .bindPopup(result3 + '<br/><button type="button" class="btn btn-primary btn-icon-split">I have visited this place</button>');
-       console.log((Object.values(latlong[k])));
-       //btn btn-primary sidebar-open-button
+        icon1='';
       
        }
-
-        //map.flyTo(setView(result5,result6));
-       // console.log((Object.values(latlong[i])));
           }
 
         });
