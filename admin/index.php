@@ -493,7 +493,13 @@ if(isset($_POST["visit_button"])){
         result6 = value;
           }
         });
-
+        let result9 = '';	
+        Object.entries(latlong[i]).find(([key, value]) => {	
+        if (key === 'poi_id') {	
+        result9 = value;	
+        console.log(result9);	
+          }	
+        });
 
         
        
@@ -517,6 +523,14 @@ if(isset($_POST["visit_button"])){
           result3 = value;
             }
           });
+          let result11 = '';	
+          Object.entries(latlong[k]).find(([key, value]) => {	
+          if (key === 'poi_id') {	
+          result11 = value;	
+          console.log(result11);	
+            }	
+          });	
+
 
 
 
@@ -539,7 +553,7 @@ if(isset($_POST["visit_button"])){
 
         marker = L.marker(Object.values([result5,result6]))
         .addTo(map)
-        .bindPopup(result7 + '<br/> <button class="btn btn-danger btn-icon-split" id="visit" data-toggle="modal" data-target="#visit">I have visited this place</button>')
+        .bindPopup(result7 + '<br/> <button class="btn btn-danger btn-icon-split" id="visit" data-toggle="modal" data-target="#visit">I have visited this place</button>' + result9)
         .openPopup();
         
         
@@ -551,7 +565,7 @@ if(isset($_POST["visit_button"])){
 
          marker = new L.marker(Object.values([result1,result2]) ,{icon: icon1})
         .addTo(map)
-        .bindPopup(result3 + '<br/> <button class="btn btn-danger btn-icon-split" id="visit" data-toggle="modal" data-target="#visit">I have visited this place</button>');
+        .bindPopup(result3 + '<br/> <button class="btn btn-danger btn-icon-split" id="visit" data-toggle="modal" data-target="#visit">I have visited this place</button>' + result11);
         icon1='';
 
        
