@@ -69,6 +69,54 @@ if(isset($_POST["covid_button"])){
 
 ?>
 
+
+
+<?php
+
+// Include config file
+require_once "config.php";
+
+if(isset($_POST["visit_button"])){
+
+  
+    $visit_userid = $_SESSION["id"];
+    date_default_timezone_set("Europe/Athens");
+    $visit_timestamp = date_create()->format('Y-m-d H:i:s');
+
+    $visit_poiid = 'ChIJ4bvbRlU3XhMRizrDqc9I6fU';
+    
+   
+  
+        $insert_visit = "INSERT INTO myvisit(visit_userid, visit_poiid, visit_timestamp)
+        VALUES ('$visit_userid', '$visit_poiid', '$visit_timestamp');";
+    
+    
+    
+    try {
+    
+        $stmt = mysqli_stmt_init($link);
+        mysqli_stmt_prepare($stmt, $insert_visit);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+       
+       
+       
+        
+        
+    }
+    catch (Exception $err) {
+ 
+        die;
+    }
+
+    
+    
+   
+
+}
+
+?>
+
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
   <!-- Main Content -->
@@ -217,6 +265,8 @@ if(isset($_POST["covid_button"])){
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 
+      <!-- COVID -->
+
       <div class="my-2"></div>
                                     <button class="btn btn-danger btn-icon-split" id="covid-case" data-toggle="modal" data-target="#covid_case">
                                         <span class="icon text-white-50">
@@ -248,6 +298,38 @@ if(isset($_POST["covid_button"])){
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" name="covid_button" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- VISIT -->
+
+<div class="my-2"></div>
+<div class="modal fade" id="visit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Visit</h5>
+        <button type="button" class="btn btn-danger btn-icon-split close " data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="index.php" name="visitForm" method="POST">
+
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label> Have you visited this place? </label>
+                
+            </div>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="submit" name="visit_button" class="btn btn-primary">Yes</button>
         </div>
       </form>
 
@@ -295,7 +377,9 @@ if(isset($_POST["covid_button"])){
       
     map.setView([37.983810,23.727539],6);
 
-
+    // $('#visit-button').on('click', function(){
+    //       alert("The paragraph was clicked.");
+    // });
 
 
     $('#pure-button').on('click', function(){
@@ -455,7 +539,7 @@ if(isset($_POST["covid_button"])){
 
         marker = L.marker(Object.values([result5,result6]))
         .addTo(map)
-        .bindPopup(result7 + '<br/><button type="button" class="btn btn-primary btn-icon-split">I have visited this place</button>')
+        .bindPopup(result7 + '<br/> <button class="btn btn-danger btn-icon-split" id="visit" data-toggle="modal" data-target="#visit">I have visited this place</button>')
         .openPopup();
         
         
@@ -467,8 +551,10 @@ if(isset($_POST["covid_button"])){
 
          marker = new L.marker(Object.values([result1,result2]) ,{icon: icon1})
         .addTo(map)
-        .bindPopup(result3 + '<br/><button type="button" class="btn btn-primary btn-icon-split">I have visited this place</button>');
+        .bindPopup(result3 + '<br/> <button class="btn btn-danger btn-icon-split" id="visit" data-toggle="modal" data-target="#visit">I have visited this place</button>');
         icon1='';
+
+       
       
        }
           }

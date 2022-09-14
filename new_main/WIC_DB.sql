@@ -38,10 +38,10 @@ CREATE TABLE myPOIS_TYPE(
 
 CREATE TABLE  myVISIT(
 		
-			visit_id int NOT NULL PRIMARY KEY,
+			visit_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			visit_userid int, 
 			visit_poiid varchar(128),
-			visit_timestamp time,
+			visit_timestamp date,
 			CONSTRAINT VISIT_USER FOREIGN KEY (visit_userid) REFERENCES myUSERS (user_id)
 			ON DELETE CASCADE
 			ON UPDATE CASCADE,
