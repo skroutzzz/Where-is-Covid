@@ -102,6 +102,13 @@
         <span>Charts</span></a>
 </li>
 
+<!-- Nav Item - Covid around me -->
+<li class="nav-item">
+                <a class="nav-link" href="covid-around.php">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span> Covid Around Me</span></a>
+            </li>
+
 <!-- Nav Item - Tables -->
 <li class="nav-item">
     <a class="nav-link" href="tables.html">
