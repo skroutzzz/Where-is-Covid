@@ -388,7 +388,7 @@ if(isset($_POST["visit_button"])){
 
     map.on('locationfound', onLocationFound);
     function onLocationFound(e) {
-    console.log(e); 
+    //console.log(e); 
     L.marker(e.latlng).addTo(map)
     .bindPopup("You are within 20 meters from this point")
     .openPopup();
@@ -465,7 +465,7 @@ if(isset($_POST["visit_button"])){
         if (isset($_POST['k']) && $_POST['k'] != ''){
         echo $poi_name; }
         ?>';
-        console.log(display_words);
+        //console.log(display_words);
         
         const array_map=[];
         var icon1 = '';
@@ -497,7 +497,7 @@ if(isset($_POST["visit_button"])){
         Object.entries(latlong[i]).find(([key, value]) => {	
         if (key === 'poi_id') {	
         result9 = value;	
-        console.log(result9);	
+        //console.log(result9);	
           }	
         });
 
@@ -527,7 +527,7 @@ if(isset($_POST["visit_button"])){
           Object.entries(latlong[k]).find(([key, value]) => {	
           if (key === 'poi_id') {	
           result11 = value;	
-          console.log(result11);	
+          //console.log(result11);	
             }	
           });	
 
@@ -541,10 +541,11 @@ if(isset($_POST["visit_button"])){
         result10 = value;
         var date = new Date();
         var hour = date.getHours();
+        var minutes = date.getMinutes()
         var day = date.getDay();
         var res = JSON.parse(result10);
-        console.log(res);
-        console.log(res[day-1].data[hour]);
+        //console.log(res);
+        //console.log(res[day-1].data[hour]);
         if(res[day-1].data[hour]>66)
           {icon1 = redIcon;}
         else if(res[day-1].data[hour]>33)
@@ -553,7 +554,8 @@ if(isset($_POST["visit_button"])){
 
         marker = L.marker(Object.values([result5,result6]))
         .addTo(map)
-        .bindPopup(result7 + '<br/> <button class="btn btn-danger btn-icon-split" id="visit" data-toggle="modal" data-target="#visit">I have visited this place</button>' + result9)
+        .bindPopup(result7)
+        .on('click', onClick)
         .openPopup();
         
         
@@ -565,9 +567,79 @@ if(isset($_POST["visit_button"])){
 
          marker = new L.marker(Object.values([result1,result2]) ,{icon: icon1})
         .addTo(map)
-        .bindPopup(result3 + '<br/> <button class="btn btn-danger btn-icon-split" id="visit" data-toggle="modal" data-target="#visit">I have visited this place</button>' + result11);
+        .on('click', onClick)
+        .bindPopup(result3);
         icon1='';
 
+
+
+        function onClick() {
+          if (confirm('Are you sure you want to save this thing into the database?')) {
+
+
+                                           
+                 var db = result11;
+                    if ($(db).val() != 0) {
+                       $.post("button-insert.php", {
+                          variable:db
+                             }, function(data1) {
+                            if (data1 != "") {
+                           alert('We sent Jquery string to PHP : ' + data1);
+                           }
+                                  });
+                                  }
+            <?php
+
+                  // Include config file
+                  require_once "config.php";
+
+                  if(isset($_POST["visit_button"])){
+
+                      $db=json_decode($_POST['jsondata']);
+                      $visit_userid = $_SESSION["id"];
+                      date_default_timezone_set("Europe/Athens");
+                      $visit_timestamp = date_create()->format('Y-m-d H:i:s');
+
+                      $visit_poiid = $db;
+                      
+                    
+                    
+                          $insert_visit = "INSERT INTO myvisit(visit_userid, visit_poiid, visit_timestamp)
+                          VALUES ('$visit_userid', '$visit_poiid', '$visit_timestamp');";
+                      
+                      
+                      
+                      try {
+                      
+                          $stmt = mysqli_stmt_init($link);
+                          mysqli_stmt_prepare($stmt, $insert_visit);
+                          mysqli_stmt_execute($stmt);
+                          mysqli_stmt_close($stmt);
+                        
+                        
+                        
+                          
+                          
+                      }
+                      catch (Exception $err) {
+                  
+                          die;
+                      }
+
+                      
+                      
+                    
+
+                  }
+
+                  ?>
+
+            console.log('Thing was saved to the database.');
+          } else {
+            // Do nothing!
+            console.log('Thing was not saved to the database.');
+          }
+        }
        
       
        }
