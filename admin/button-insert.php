@@ -17,18 +17,20 @@ require_once "config.php";
 
 
     $jqueryVariable = $_POST['variable'];
-    echo $jqueryVariable;
+    $visit_estimation = $_POST['var2'];
+    echo $visit_estimation;
     $visit_userid = $_SESSION["id"];
     date_default_timezone_set("Europe/Athens");
     $visit_timestamp = date_create()->format('Y-m-d H:i:s');
-    echo $visit_timestamp;
+    //echo $visit_timestamp;
 
     $visit_poiid = $jqueryVariable;
+    $visit_est   = $visit_estimation;
     
    
   
-        $insert_visit = "INSERT INTO myvisit(visit_userid, visit_poiid, visit_timestamp)
-        VALUES ('$visit_userid', '$visit_poiid', '$visit_timestamp');";
+        $insert_visit = "INSERT INTO myvisit(visit_userid, visit_poiid, visit_timestamp, visit_estimation)
+        VALUES ('$visit_userid', '$visit_poiid', '$visit_timestamp' ,'$visit_estimation');";
     
     
     

@@ -576,63 +576,20 @@ if(isset($_POST["visit_button"])){
         function onClick() {
           if (confirm('Are you sure you want to save this thing into the database?')) {
 
-
+            var result = prompt("Visit Estimation");  
                                            
                  var db = result11;
                     if ($(db).val() != 0) {
                        $.post("button-insert.php", {
-                          variable:db
+                          variable:db,
+                          var2: result
                              }, function(data1) {
                             if (data1 != "") {
                            alert('We sent Jquery string to PHP : ' + data1);
                            }
                                   });
                                   }
-            <?php
 
-                  // Include config file
-                  require_once "config.php";
-
-                  if(isset($_POST["visit_button"])){
-
-                      $db=json_decode($_POST['jsondata']);
-                      $visit_userid = $_SESSION["id"];
-                      date_default_timezone_set("Europe/Athens");
-                      $visit_timestamp = date_create()->format('Y-m-d H:i:s');
-
-                      $visit_poiid = $db;
-                      
-                    
-                    
-                          $insert_visit = "INSERT INTO myvisit(visit_userid, visit_poiid, visit_timestamp)
-                          VALUES ('$visit_userid', '$visit_poiid', '$visit_timestamp');";
-                      
-                      
-                      
-                      try {
-                      
-                          $stmt = mysqli_stmt_init($link);
-                          mysqli_stmt_prepare($stmt, $insert_visit);
-                          mysqli_stmt_execute($stmt);
-                          mysqli_stmt_close($stmt);
-                        
-                        
-                        
-                          
-                          
-                      }
-                      catch (Exception $err) {
-                  
-                          die;
-                      }
-
-                      
-                      
-                    
-
-                  }
-
-                  ?>
 
             console.log('Thing was saved to the database.');
           } else {

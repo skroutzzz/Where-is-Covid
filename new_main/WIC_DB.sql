@@ -42,6 +42,7 @@ CREATE TABLE  myVISIT(
 			visit_userid int, 
 			visit_poiid varchar(128),
 			visit_timestamp datetime,
+			visit_estimation int,
 			CONSTRAINT VISIT_USER FOREIGN KEY (visit_userid) REFERENCES myUSERS (user_id)
 			ON DELETE CASCADE
 			ON UPDATE CASCADE,
