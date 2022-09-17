@@ -70,7 +70,7 @@
     EDIT PROFILE
 </div>
 
-<!-- Nav Item - Charts -->
+<!-- Nav Item - Profile Settings -->
 <li class="nav-item">
     <a class="nav-link" href="edit.php">
         <i class="fas fa-fw fa-chart-area"></i>
