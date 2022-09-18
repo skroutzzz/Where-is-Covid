@@ -41,7 +41,6 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Admin Options:</h6>
             <a class="collapse-item" href="register.php">Add Admin</a>
-            <a class="collapse-item" href="adminprof.php">Admin Profile</a>
         </div>
     </div>
 </li>
@@ -68,7 +67,7 @@
     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Options:</h6>
-            <a class="collapse-item" href="insertdata.html">Insert</a>
+            <a class="collapse-item" href="insertpoi.php">Insert</a>
             <a class="collapse-item" href="deletedata.php">Delete</a>
         </div>
     </div>
@@ -76,7 +75,7 @@
 
 <!-- Nav Item - Charts -->
 <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" href="charts.php">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Charts</span></a>
 </li>

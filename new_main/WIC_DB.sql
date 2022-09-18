@@ -63,28 +63,25 @@ CREATE TABLE  myCOVID(
 
 );
 
-
+CREATE TABLE pages
+(
+  id INTEGER  NOT NULL IDENTITY(1,1)  PRIMARY KEY,
+  total_views INTEGER  NOT NULL,
+  
+);
+CREATE TABLE page_views
+(
+  visitor_ip VARCHAR(255) NOT NULL,
+  page_id INTEGER   NOT NULL,
+  
+CONSTRAINT page_view FOREIGN KEY (page_id) REFERENCES pages (id)
+);
 
 
 /*
-
-
-
-CREATE TABLE  myCOORD(
-
-			coord_id varchar(128) NOT NULL PRIMARY KEY,
-			latitude float,
-			longtitude float,
-			CONSTRAINT POI_COORD FOREIGN KEY (coord_id) REFERENCES myPOIS (poi_id)
-			ON DELETE CASCADE
-			ON UPDATE CASCADE
-);
-
-*/
-
 INSERT INTO  myUSERS
 VALUES ('1','StavrouI','$2y$10$MzwhZvaoupJClUD0VNJzmubGmjBb90K6REAIC.eXEMxvDm0nOXkpm','stavroujohn@gmail.com','1'),
       ('2','KonstantinosT','$2y$10$uzReQ0lM52F53emq8IPS.e5BOB0GWvgGli2KxwI/InD73x0R2ZS/u','kontsig@gmail.com','1'),
-      ('3','NanosG','$2y$10$xGuI4VhsBur5nmpJO4VNGOzfpIMx2Gnv3xE.CKe9heNlzUHzKHEhu','nanosgio@gmail.com','');
+      ('3','NanosG','$2y$10$xGuI4VhsBur5nmpJO4VNGOzfpIMx2Gnv3xE.CKe9heNlzUHzKHEhu','nanosgio@gmail.com',''); */
 
 	   
