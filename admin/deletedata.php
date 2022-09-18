@@ -87,7 +87,6 @@ include('includes/navbar.php');
         </li>
 
 
-
         <div class="topbar-divider d-none d-sm-block"></div>
 
         <!-- Nav Item - User Information -->
@@ -114,18 +113,6 @@ include('includes/navbar.php');
             class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
             aria-labelledby="userDropdown"
           >
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Profile
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-              Settings
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-              Activity Log
-            </a>
             <div class="dropdown-divider"></div>
             <a
               class="dropdown-item"
@@ -142,46 +129,33 @@ include('includes/navbar.php');
     </nav>
     <!-- End of Topbar -->
 
-    <form action="Profile_Update.php" method="post">
   <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Change User Data</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="signupForm" method="POST">
+         <form action ="delete.php" method="post">
         
           <div class="modal-body">
 
               <div class="form-group">
-                  <label> Change Username </label>
-                  <input type="text" name="username"  >
-              </div>
-              <div class="form-group">
-                  <label> Change Password</label>
-                  <input type="password" name="password"  >
-              </div>
-              <div class="form-group">
-                  <label>Confirm Password</label>
-                  <input type="password" name="confirm_password"  >
-              </div>
-
-
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" name="edit_button" class="btn btn-primary">Save</button>
-              
-          </div>
+                <button type="submit" name ="deleteALL"id="btn">Delete ALL data</button>
+                </div>  
         </form>
+              
+    <div id="content"></div>
+
+             </div>
+         </form>
 
       </div>
     </div>
   </div>
-</form>
+
 
 
 
@@ -190,74 +164,13 @@ include('includes/navbar.php');
 <div class="card shadow mb-4">
     <div class="card-header py-3">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
-            Edit Profile 
+            Delete Data
             </button>
         </h6>
     </div>
-    <div class="card-header py-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
-            View My Covid Cases
-            </button>
-        </h6>
-    </div>
-    <div class="card-header py-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
-            View My Visits
-            </button>
-        </h6>
-    </div>
-
     <div class="card-body">
     <div class="table-responsive">
 
-
-    <?php
-      require_once "config.php";
-      //$user_now = echo htmlspecialchars($_SESSION["username"]);
-      $query = "SELECT * FROM myusers WHERE user_id ='{$_SESSION['id']}'";
-
-      $query_run = mysqli_query($link, $query);
-
-    
-    ?> 
-
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                </tr>   
-            </thead>
-            <tbody>
-            <?php 
-            if(mysqli_num_rows($query_run)>0)
-            {
-              while($row = mysqli_fetch_assoc($query_run))
-              {
-                ?>
-                <tr>
-                    <td><?php echo $row['user_id']; ?></td>
-                    <td><?php echo $row['user_username']; ?></td>
-                    <td><?php echo $row['user_email']; ?></td>
-                    <td><?php echo $row['user_password']; ?></td>
-                    
-                </tr>
-                <?php 
-              }
-            }
-            
-            else{
-              echo "No Record found";
-            }
-
-            ?>
-
-            </tbody>
-        </table>
-    </div>
-</div>
 </div> <!-- PROSOXI AYTO -->
 
 </div>
