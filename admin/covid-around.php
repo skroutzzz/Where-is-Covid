@@ -393,8 +393,8 @@ include('includes/navbar.php');
         //echo '<pre>'; print_r($array[0]['visit_id']); echo '</pre>';
       
       }
-      // echo '<pre>'; print_r($array); echo '</pre>';
-      // echo '<pre>'; print_r($array1); echo '</pre>';
+      //  echo '<pre>'; print_r($array); echo '</pre>';
+      //  echo '<pre>'; print_r($array1); echo '</pre>';
 
 
     ?> 
@@ -402,7 +402,7 @@ include('includes/navbar.php');
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Visited Places</th>
+                    <th>Dangerous Places</th>
                     <th>Time</th>
                     <th>Address</th>
                 </tr>   
@@ -414,7 +414,7 @@ include('includes/navbar.php');
        
         if(sizeof($array1)!=0){
               for ($i = 0; $i <= sizeof($array)-1; $i++)
-              {  
+              { $l=1;
                 
                 for ($x = 0; $x <= sizeof($array1)-1; $x++){
 
@@ -426,7 +426,7 @@ include('includes/navbar.php');
                 echo "<script>console.log('{[$dif2]}');</script>"; 
                 echo "<script>console.log('{[$dif1]}');</script>"; 
 
-                IF($array[$i]['visit_poiid']===$array1[$x]['visit_poiid']){
+                IF($array[$i]['visit_poiid']===$array1[$x]['visit_poiid'] && $l===1){
                           
                           echo '<tr>';
                           echo '<td><p style="color:#FF0000">';
@@ -439,32 +439,34 @@ include('includes/navbar.php');
                           echo $array[$i]['poi_address']; 
                           echo '</td>';
                           echo '</tr>';
-                          
+                          $l=0;
                         }
 
-                          else {
-                            echo '<tr>';
-                            echo '<td>';
-                            echo $array[$i]['poi_name'];
-                            echo '<td>';
-                            echo $array[$i]['visit_timestamp'];
-                            echo '</td>';
-                            echo '<td>';
-                            echo $array[$i]['poi_address']; 
-                            echo '</td>';
-                            echo '</tr>';
-                            $l=0;
-                          }
                           
 
             
                         }
             }
+
+          
           }
 
 
-            else
-          {
+          ?> 
+
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                  <tr>
+                      <th>Visited Places</th>
+                      <th>Time</th>
+                      <th>Address</th>
+                  </tr>   
+              </thead>
+              <tbody>
+              <?php 
+          
+         
+        
             
             for ($t = 0; $t <= sizeof($array)-1; $t++){
                             echo '<tr>';
@@ -479,7 +481,7 @@ include('includes/navbar.php');
                             echo '</tr>';
                             
           }
-        }
+        
            
 
             ?>
