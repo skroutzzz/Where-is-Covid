@@ -192,6 +192,13 @@ include('includes/navbar.php');
       ON myvisit.visit_poiid = mypois.poi_id 
       WHERE visit_userid ='{$_SESSION['id']}'";
 
+
+      $query2 = "SELECT cov_date FROM mycovid
+      WHERE covid_userid ='{$_SESSION['id']}'";
+
+      $query_run2 = mysqli_query($link, $query2);
+
+
       $query_run = mysqli_query($link, $query);
       
       $query1 = "SELECT * FROM myvisit 
@@ -205,11 +212,22 @@ include('includes/navbar.php');
 
       $array = array();
       $array1 = array();
+      $array2 = array();
 
       while($row = mysqli_fetch_assoc($query_run)){
 
         // add each row returned into an array
         $array[] = $row;
+      
+        // OR just echo the data:
+        //echo '<pre>'; print_r($array); echo '</pre>';
+      
+      }
+
+      while($row2 = mysqli_fetch_assoc($query_run2)){
+
+        // add each row returned into an array
+        $array2[] = $row2;
       
         // OR just echo the data:
         //echo '<pre>'; print_r($array); echo '</pre>';
@@ -316,6 +334,39 @@ include('includes/navbar.php');
           }
         
            
+          ?> 
+
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                  <tr>
+                      <th>My Covid History</th>
+                  </tr>   
+              </thead>
+              <tbody>
+              <?php 
+
+           if(sizeof($array2)!=0){
+            for ($p = 0; $p <= sizeof($array2)-1; $p++){
+                            echo '<tr>';
+                            echo '<td>';
+                            echo 'Date : ';
+                            echo $array2[$p]['cov_date'];
+                            echo '</td>';
+                            echo '</tr>';
+                            
+          }
+        }
+        else
+        {
+          echo '<tr>';
+          echo '<td>';
+          echo '0 covid case insertion';
+          echo '</td>';
+          echo '</tr>';
+
+        }
+        
+         
 
             ?>
 
