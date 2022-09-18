@@ -3,7 +3,7 @@
  session_start();
  include "config.php";
 
- if(isset($_POST['deleteALLA'])) {
+ if(isset($_POST['deleteALL'])) {
 
     $sql ="DELETE FROM mypois";
 
