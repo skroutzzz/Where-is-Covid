@@ -14,12 +14,6 @@ include('includes/header.php');
 include('includes/navbar.php');
 require_once "config.php";
 
-require_once('includes/functions.php');
-$page_id = 1 ;
-//$visitor_ip = $_SERVER['REMOTE_ADDR']; // stores IP address of visitor in variable
-$visitor_ip = $_SESSION["loggedin"];
-add_view($link, $visitor_ip, $page_id);
-
 ?>
 
 <?php
