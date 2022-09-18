@@ -13,4 +13,5 @@
         echo "Error deleting record: " . mysqli_error($link);
     }
     mysqli_close($link);
-}" 
+}
+?>
