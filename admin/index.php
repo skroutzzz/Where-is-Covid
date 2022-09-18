@@ -265,7 +265,7 @@ if(isset($_POST["visit_button"])){
     <div class="container-fluid">
       <!-- Page Heading -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Main</h1>
+      <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 
       <!-- COVID -->
 
@@ -427,7 +427,34 @@ if(isset($_POST["visit_button"])){
     { 
       success: function(data) {
 
+      
+      <?php 
+      require_once "config.php";
+      //$user_now = echo htmlspecialchars($_SESSION["username"]);
+      $query = "SELECT (LEFT(RIGHT(visit_timestamp,8),2)) AS visit_timestamp ,visit_estimation,visit_poiid FROM myvisit;";
+      $query_run = mysqli_query($link, $query);
+      $arrayvisit = array();
+
+      while($row = mysqli_fetch_assoc($query_run)){
+
+        // add each row returned into an array
+        $arrayvisit[] = $row;
        
+
+        // OR just echo the data:
+        //echo '<pre>'; print_r($array); echo '</pre>';
+
+        }
+      
+        ?>
+
+      
+        var jsvar = <?php echo json_encode($arrayvisit,JSON_NUMERIC_CHECK); ?>;
+        console.log(jsvar);
+          var esti = 0;
+          var div = 0;
+          var esti1 = 0;
+          var div1 = 0;
         
         var redIcon = new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
@@ -529,16 +556,22 @@ if(isset($_POST["visit_button"])){
           Object.entries(latlong[k]).find(([key, value]) => {	
           if (key === 'poi_id') {	
           result11 = value;	
-          //console.log(result11);	
             }	
           });
           let result10 = '';
           Object.entries(latlong[k]).find(([key, value]) => {
           if (key  === 'populartimes') {
           result10 = value;	
+        }
+          }); 
+
+          //console.log(result11);	
+
+
+
+      
+
          
-
-
        ///POPULARTIMES
    
         var date = new Date();
@@ -548,6 +581,88 @@ if(isset($_POST["visit_button"])){
         var res = JSON.parse(result10);
         //console.log(res);
         //console.log(res[day-1].data[hour]);
+        
+        
+        
+        
+
+        for ( var m = 0; m<jsvar.length; m ++) { 
+
+          // console.log(jsvar[m]['visit_poiid']);	
+          // console.log(result11);	
+          // console.log(jsvar[m]['visit_timestamp']);	
+          // console.log(21);	
+          if (jsvar[m]['visit_poiid'] == result11 && jsvar[m]['visit_timestamp'] == hour)
+          {
+          // console.log(jsvar[m]['visit_estimation'] + 'visit est' + m);	 
+          esti = esti + jsvar[m]['visit_estimation'];	
+          div = div + 1;
+          // console.log(esti+ 'visit esti' + m);
+          // console.log(div+ 'visit div' + m);
+          
+
+          }
+      }
+
+        //console.log(esti);	
+
+          if(div!=0){
+            console.log(esti);
+            console.log(div);
+
+          esti=Math.round(esti/div);
+
+          console.log(esti);
+          }
+          else
+
+            {
+              esti='No visit estimation from user';
+              }
+
+
+
+      
+        
+
+        for ( var y = 0; y<jsvar.length; y ++) { 
+
+          // console.log(jsvar[m]['visit_poiid']);	
+          // console.log(result11);	
+          // console.log(jsvar[m]['visit_timestamp']);	
+          // console.log(21);	
+          if (jsvar[y]['visit_poiid'] == result9 && jsvar[y]['visit_timestamp'] === hour)
+          {
+          // console.log(jsvar[m]['visit_estimation'] + 'visit est1' + y);	 
+          esti1 = esti1 + jsvar[y]['visit_estimation'];	
+          div1 = div1 + 1;
+          //console.log(esti1);
+          // console.log(esti1+ 'visit esti1' + y);
+          // console.log(div1+ 'visit div1' + y);
+
+          }
+      }
+
+        //console.log(esti);	
+
+          if(div1!=0){
+
+            console.log(esti1);
+            console.log(div1);
+          esti1=Math.round(esti1/div1);
+          console.log(esti1);
+          }
+          else
+
+            {
+              esti1='No visit estimation from user';
+              
+            }
+
+
+
+
+
         if(day===0)
         {
           day=6;
@@ -559,26 +674,30 @@ if(isset($_POST["visit_button"])){
         else {icon1 = blueIcon;}
 
 
+        console.log(esti1);
 
         marker = L.marker(Object.values([result5,result6]))
         .addTo(map)
-        .bindPopup(result7)
+        .bindPopup(result7+" - Visit estimation from users: " + esti1)
         .on('click', onClick)
         .openPopup();
-        
+
         
         map.setView([result5,result6], 19);
 
-        }
-          }); 
-
+        
          
 
          marker = new L.marker(Object.values([result1,result2]) ,{icon: icon1})
         .addTo(map)
         .on('click', onClick1)
-        .bindPopup(result3);
+        .bindPopup(result3+" - Visit estimation from users: " + esti);
         icon1='';
+
+        esti=0;
+        div=0;
+        esti1 = 0;
+        div1 = 0;
 
 
         function onClick() {
