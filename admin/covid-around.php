@@ -418,15 +418,15 @@ include('includes/navbar.php');
                 
                 for ($x = 0; $x <= sizeof($array1)-1; $x++){
 
-                $difference = strtotime($array1[$x]['visit_timestamp']) - strtotime($array[$i]['visit_timestamp']);
-                $difference = $difference/(24*60*60);
-                $dif1 = $difference-(strtotime("-2 hours")/(60*60));
-                $dif2 = $difference-(strtotime("+2 hours")/(60*60));
+                $difference = strtotime($array[$i]['visit_timestamp']) - strtotime($array1[$x]['visit_timestamp']);
+                $difference1 = round($difference/(24*60*60),1);
+                $dif1 = $difference/(60*60) + 2;
+                $dif2 = $difference /(60*60) - 2;
                 echo "<script>console.log('{$difference}' );</script>"; 
                 echo "<script>console.log('{[$dif2]}');</script>"; 
                 echo "<script>console.log('{[$dif1]}');</script>"; 
 
-                IF($array[$i]['visit_poiid']===$array1[$x]['visit_poiid'] && $l===1){
+                IF($array[$i]['visit_poiid']===$array1[$x]['visit_poiid'] && $l===1 && $difference1<1 && $difference1>-6 && ( ($dif1<2 && $dif1>-2) || ($dif2<2 && $dif2>-2) ) ){
                           
                           echo '<tr>';
                           echo '<td><p style="color:#FF0000">';
