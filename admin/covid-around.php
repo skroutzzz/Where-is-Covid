@@ -344,25 +344,8 @@ include('includes/navbar.php');
 
 <div class="container-fluid">
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
-            Edit Profile 
-            </button>
-        </h6>
-    </div>
-    <div class="card-header py-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
-            View My Covid Cases
-            </button>
-        </h6>
-    </div>
-    <div class="card-header py-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
-            View My Visits
-            </button>
-        </h6>
-    </div>
+
+
 
     <div class="card-body">
     <div class="table-responsive">
@@ -371,43 +354,133 @@ include('includes/navbar.php');
     <?php
       require_once "config.php";
       //$user_now = echo htmlspecialchars($_SESSION["username"]);
-      $query = "SELECT * FROM myusers WHERE user_id ='{$_SESSION['id']}'";
+      $query = "SELECT * FROM myvisit 
+      INNER JOIN mypois
+      ON myvisit.visit_poiid = mypois.poi_id 
+      WHERE visit_userid ='{$_SESSION['id']}'";
 
       $query_run = mysqli_query($link, $query);
+      
+      $query1 = "SELECT * FROM myvisit 
+      INNER JOIN mypois
+      ON myvisit.visit_poiid = mypois.poi_id 
+      LEFT JOIN mycovid
+      ON myvisit.visit_id = mycovid.covid_id
+      WHERE visit_userid !='{$_SESSION['id']}'";
 
-    
+      $query_run1 = mysqli_query($link, $query1);
+
+      $array = array();
+      $array1 = array();
+
+      while($row = mysqli_fetch_assoc($query_run)){
+
+        // add each row returned into an array
+        $array[] = $row;
+      
+        // OR just echo the data:
+        //echo '<pre>'; print_r($array); echo '</pre>';
+      
+      }
+      
+      // debug:
+      while($row1 = mysqli_fetch_assoc($query_run1)){
+
+        // add each row returned into an array
+        $array1[] = $row1;
+      
+        // OR just echo the data:
+        //echo '<pre>'; print_r($array[0]['visit_id']); echo '</pre>';
+      
+      }
+      // echo '<pre>'; print_r($array); echo '</pre>';
+      // echo '<pre>'; print_r($array1); echo '</pre>';
+
+
     ?> 
 
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Password</th>
+                    <th>Visited Places</th>
+                    <th>Time</th>
+                    <th>Address</th>
                 </tr>   
             </thead>
             <tbody>
             <?php 
-            if(mysqli_num_rows($query_run)>0)
-            {
-              while($row = mysqli_fetch_assoc($query_run))
-              {
-                ?>
-                <tr>
-                    <td><?php echo $row['user_id']; ?></td>
-                    <td><?php echo $row['user_username']; ?></td>
-                    <td><?php echo $row['user_email']; ?></td>
-                    <td><?php echo $row['user_password']; ?></td>
-                    
-                </tr>
-                <?php 
-              }
-            }
+        
+        
+       
+        if(sizeof($array1)!=0){
+              for ($i = 0; $i <= sizeof($array)-1; $i++)
+              {  
+                
+                for ($x = 0; $x <= sizeof($array1)-1; $x++){
+
+                $difference = strtotime($array1[$x]['visit_timestamp']) - strtotime($array[$i]['visit_timestamp']);
+                $difference = $difference/(24*60*60);
+                $dif1 = $difference-(strtotime("-2 hours")/(60*60));
+                $dif2 = $difference-(strtotime("+2 hours")/(60*60));
+                echo "<script>console.log('{$difference}' );</script>"; 
+                echo "<script>console.log('{[$dif2]}');</script>"; 
+                echo "<script>console.log('{[$dif1]}');</script>"; 
+
+                IF($array[$i]['visit_poiid']===$array1[$x]['visit_poiid']){
+                          
+                          echo '<tr>';
+                          echo '<td><p style="color:#FF0000">';
+                          echo $array[$i]['poi_name'];
+                          echo ' - COVID CONFIRMED CASE<span>&#9888;</span></p></td>';
+                          echo '<td>';
+                          echo $array[$i]['visit_timestamp'];
+                          echo '</td>';
+                          echo '<td>';
+                          echo $array[$i]['poi_address']; 
+                          echo '</td>';
+                          echo '</tr>';
+                          
+                        }
+
+                          else {
+                            echo '<tr>';
+                            echo '<td>';
+                            echo $array[$i]['poi_name'];
+                            echo '<td>';
+                            echo $array[$i]['visit_timestamp'];
+                            echo '</td>';
+                            echo '<td>';
+                            echo $array[$i]['poi_address']; 
+                            echo '</td>';
+                            echo '</tr>';
+                            $l=0;
+                          }
+                          
+
             
-            else{
-              echo "No Record found";
+                        }
             }
+          }
+
+
+            else
+          {
+            
+            for ($t = 0; $t <= sizeof($array)-1; $t++){
+                            echo '<tr>';
+                            echo '<td>';
+                            echo $array[$t]['poi_name'];
+                            echo '<td>';
+                            echo $array[$t]['visit_timestamp'];
+                            echo '</td>';
+                            echo '<td>';
+                            echo $array[$t]['poi_address']; 
+                            echo '</td>';
+                            echo '</tr>';
+                            
+          }
+        }
+           
 
             ?>
 

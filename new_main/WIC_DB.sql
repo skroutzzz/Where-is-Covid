@@ -1,6 +1,7 @@
 
 DROP DATABASE IF EXISTS wic_db;
-CREATE DATABASE wic_db;
+CREATE DATABASE wic_db CHARACTER SET utf8  COLLATE utf8_general_ci;
+USE  wic_db;
 
 CREATE TABLE  myUSERS (
 
@@ -81,9 +82,9 @@ CREATE TABLE  myCOORD(
 
 */
 
---INSERT INTO  myUSERS
---VALUES ('1','StavrouI','$2y$10$MzwhZvaoupJClUD0VNJzmubGmjBb90K6REAIC.eXEMxvDm0nOXkpm','stavroujohn@gmail.com','1'),
---       ('2','KonstantinosT','$2y$10$uzReQ0lM52F53emq8IPS.e5BOB0GWvgGli2KxwI/InD73x0R2ZS/u','kontsig@gmail.com','1'),
---       ('3','NanosG','$2y$10$xGuI4VhsBur5nmpJO4VNGOzfpIMx2Gnv3xE.CKe9heNlzUHzKHEhu','nanosgio@gmail.com','');
+INSERT INTO  myUSERS
+VALUES ('1','StavrouI','$2y$10$MzwhZvaoupJClUD0VNJzmubGmjBb90K6REAIC.eXEMxvDm0nOXkpm','stavroujohn@gmail.com','1'),
+      ('2','KonstantinosT','$2y$10$uzReQ0lM52F53emq8IPS.e5BOB0GWvgGli2KxwI/InD73x0R2ZS/u','kontsig@gmail.com','1'),
+      ('3','NanosG','$2y$10$xGuI4VhsBur5nmpJO4VNGOzfpIMx2Gnv3xE.CKe9heNlzUHzKHEhu','nanosgio@gmail.com','');
 
 	   

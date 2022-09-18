@@ -21,6 +21,8 @@ require_once "config.php";
 // Include config file
 require_once "config.php";
 
+
+
 if(isset($_POST["covid_button"])){
 
     $covid_userid = $_SESSION["id"];
@@ -28,7 +30,7 @@ if(isset($_POST["covid_button"])){
     $covid_date = $_POST["covid-date"];
     
    
-    $sql = "SELECT cov_date FROM mycovid";
+    $sql = "SELECT cov_date FROM mycovid WHERE covid_userid ='{$_SESSION['id']}'";
 
     $query = mysqli_query($link, $sql);
     $result_count = mysqli_num_rows($query);
@@ -529,16 +531,16 @@ if(isset($_POST["visit_button"])){
           result11 = value;	
           //console.log(result11);	
             }	
-          });	
-
-
+          });
+          let result10 = '';
+          Object.entries(latlong[k]).find(([key, value]) => {
+          if (key  === 'populartimes') {
+          result10 = value;	
+         
 
 
        ///POPULARTIMES
-        let result10 = '';
-        Object.entries(latlong[k]).find(([key, value]) => {
-        if (key  === 'populartimes') {
-        result10 = value;
+   
         var date = new Date();
         var hour = date.getHours();
         var minutes = date.getMinutes()
@@ -546,11 +548,17 @@ if(isset($_POST["visit_button"])){
         var res = JSON.parse(result10);
         //console.log(res);
         //console.log(res[day-1].data[hour]);
+        if(day===0)
+        {
+          day=6;
+        }
         if(res[day-1].data[hour]>66)
           {icon1 = redIcon;}
         else if(res[day-1].data[hour]>33)
         {icon1 = yellowIcon;}
         else {icon1 = blueIcon;}
+
+
 
         marker = L.marker(Object.values([result5,result6]))
         .addTo(map)
@@ -561,31 +569,31 @@ if(isset($_POST["visit_button"])){
         
         map.setView([result5,result6], 19);
 
-        
-           }
-        }); 
+        }
+          }); 
+
+         
 
          marker = new L.marker(Object.values([result1,result2]) ,{icon: icon1})
         .addTo(map)
-        .on('click', onClick)
+        .on('click', onClick1)
         .bindPopup(result3);
         icon1='';
 
 
-
         function onClick() {
-          if (confirm('Are you sure you want to save this thing into the database?')) {
+          if (confirm('Insert Visit in '+ result7 +' ?')) {
 
             var result = prompt("Visit Estimation");  
-                                           
-                 var db = result11;
+
+                 var db = result9;
                     if ($(db).val() != 0) {
                        $.post("button-insert.php", {
                           variable:db,
                           var2: result
                              }, function(data1) {
                             if (data1 != "") {
-                           alert('We sent Jquery string to PHP : ' + data1);
+                           //alert('We sent Jquery string to PHP : ' + data1);
                            }
                                   });
                                   }
@@ -597,6 +605,38 @@ if(isset($_POST["visit_button"])){
             console.log('Thing was not saved to the database.');
           }
         }
+
+             
+        function onClick1() {
+          if (confirm('Insert Visit in '+ result3 +' ?')) {
+
+            var result = prompt("Visit Estimation");  
+
+                 var db = result11;
+                    if ($(db).val() != 0) {
+                       $.post("button-insert.php", {
+                          variable:db,
+                          var2: result
+                             }, function(data1) {
+                            if (data1 != "") {
+                           //alert('We sent Jquery string to PHP : ' + data1);
+                           }
+                                  });
+                                  }
+
+
+            console.log('Thanks.');
+          } else {
+            // Do nothing!
+            console.log('Thing was not saved to the database.');
+          }
+        }
+
+
+
+       
+
+   
        
       
        }
