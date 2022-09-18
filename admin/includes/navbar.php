@@ -41,7 +41,6 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Admin Options:</h6>
             <a class="collapse-item" href="register.php">Add Admin</a>
-            <a class="collapse-item" href="adminprof.php">Admin Profile</a>
         </div>
     </div>
 </li>
@@ -76,7 +75,7 @@
 
 <!-- Nav Item - Charts -->
 <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" href="charts.php">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Charts</span></a>
 </li>
