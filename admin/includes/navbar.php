@@ -67,7 +67,7 @@
     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Options:</h6>
-            <a class="collapse-item" href="insertdata.html">Insert</a>
+            <a class="collapse-item" href="insertpoi.php">Insert</a>
             <a class="collapse-item" href="deletedata.php">Delete</a>
         </div>
     </div>
