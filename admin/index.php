@@ -25,48 +25,54 @@ require_once "config.php";
 
 if(isset($_POST["covid_button"])){
 
-    $covid_userid = $_SESSION["id"];
-    
-    $covid_date = $_POST["covid-date"];
-    
-   
-    $sql = "SELECT cov_date FROM mycovid WHERE covid_userid ='{$_SESSION['id']}'";
-
-    $query = mysqli_query($link, $sql);
-    $result_count = mysqli_num_rows($query);
-    $data = mysqli_fetch_assoc($query);
-   
-
-    $difference = strtotime($covid_date)-strtotime($data["cov_date"]);
-   
-
-    if($difference/(24*60*60) > 14 ){
-
-        $insert_covid = "INSERT INTO mycovid(cov_date, covid_userid)
-        VALUES ('$covid_date', '$covid_userid');";
-    
-    
-    
-    try {
-    
-        $stmt = mysqli_stmt_init($link);
-        mysqli_stmt_prepare($stmt, $insert_covid);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-       
-       
-        
-        
-    }
-    catch (Exception $err) {
+  $covid_userid = $_SESSION["id"];
+  
+  $covid_date = $_POST["covid-date"];
+  
  
-        die;
-    }
+  $sql = "SELECT cov_date FROM mycovid WHERE covid_userid ='{$_SESSION['id']}'";
 
-    }
-    
-   
+  $query = mysqli_query($link, $sql);
+  $result_count = mysqli_num_rows($query);
+  $data = mysqli_fetch_assoc($query);
+ 
+  if(isset($data["cov_date"])){
+  $difference = strtotime($covid_date)-strtotime($data["cov_date"]);
+ }
+ else {$difference=15*24*60*60;}
 
+  if($difference/(24*60*60) > 14 || $difference/(24*60*60) < 0){
+
+      $insert_covid = "INSERT INTO mycovid(cov_date, covid_userid)
+      VALUES ('$covid_date', '$covid_userid');";
+  
+  
+  
+  try {
+  
+      $stmt = mysqli_stmt_init($link);
+      mysqli_stmt_prepare($stmt, $insert_covid);
+      mysqli_stmt_execute($stmt);
+      mysqli_stmt_close($stmt);
+     
+     
+      
+      
+  }
+  catch (Exception $err) {
+
+      die;
+  }
+
+  }
+  else{
+    echo '<script type="text/javascript">
+    window.onload = function () { alert("You have a COVID the last 14 days from the insertion date"); } 
+</script>'; 
+  }
+  
+  
+ 
 }
 
 ?>

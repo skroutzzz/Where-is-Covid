@@ -36,11 +36,12 @@ if(isset($_POST["covid_button"])){
     $result_count = mysqli_num_rows($query);
     $data = mysqli_fetch_assoc($query);
    
-
+    if(isset($data["cov_date"])){
     $difference = strtotime($covid_date)-strtotime($data["cov_date"]);
-   
+   }
+   else {$difference=15*24*60*60;}
 
-    if($difference/(24*60*60) > 14 ){
+    if($difference/(24*60*60) > 14 || $difference/(24*60*60) < 0){
 
         $insert_covid = "INSERT INTO mycovid(cov_date, covid_userid)
         VALUES ('$covid_date', '$covid_userid');";
@@ -64,10 +65,17 @@ if(isset($_POST["covid_button"])){
     }
 
     }
+    else{
+      echo '<script type="text/javascript">
+      window.onload = function () { alert("You have a COVID the last 14 days from the insertion date"); } 
+</script>'; 
+    }
+    
     
    
+  }
+ 
 
-}
 
 ?>
 
