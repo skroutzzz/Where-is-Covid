@@ -9,6 +9,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <style>
+      #map {
+        position: relative;
+        height: 800px;
+        width: 1650px;
+      }
+    </style>
     <title>Where is Covid - Dashboard</title>
 
     <!-- Custom fonts for this template-->

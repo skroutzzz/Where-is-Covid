@@ -5,7 +5,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 <!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
     <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-laugh-wink"></i>
     </div>
@@ -15,11 +15,11 @@
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
 
-<!-- Nav Item - Main -->
+<!-- Nav Item - Dashboard -->
 <li class="nav-item active">
     <a class="nav-link" href="index.php">
         <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Main Menu</span></a>
+        <span>Main</span></a>
 </li>
 
 <!-- Divider -->
@@ -27,7 +27,7 @@
 
 <!-- Heading -->
 <div class="sidebar-heading">
-    POINT OF INTEREST MENU
+    Admin Settings
 </div>
 
 <!-- Nav Item - Pages Collapse Menu -->
@@ -35,48 +35,32 @@
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
         aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-fw fa-cog"></i>
-        <span>Points of Interest</span>
+        <span>User Profile</span>
     </a>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">POIs Options:</h6>
-            <a class="collapse-item" href="./register.php">Search POI</a>
+            <h6 class="collapse-header">Admin Options:</h6>
+            <a class="collapse-item" href="edit.php">My Profile</a>
         </div>
     </div>
 </li>
 
 
 <!-- Nav Item - Utilities Collapse Menu -->
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
-        <i class="fas fa-fw fa-wrench"></i>
-        <span>You were there too!</span>
-    </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-        data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Been there?</h6>
-            <a class="collapse-item" href="utilities-color.html">Declare your visit</a>
-        </div>
-    </div>
-</li>
+
 
 <!-- Divider -->
 <hr class="sidebar-divider">
 
 <!-- Heading -->
-<div class="sidebar-heading">
-    EDIT PROFILE
-</div>
 
-<!-- Nav Item - Profile Settings -->
+
+<!-- Nav Item - Covid around me -->
 <li class="nav-item">
-    <a class="nav-link" href="edit.php">
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>Profile Settings</span></a>
-</li>
-
+                <a class="nav-link" href="covid-around.php">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span> Covid Around Me</span></a>
+            </li>
 
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
