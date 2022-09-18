@@ -108,6 +108,7 @@ include('includes/navbar.php');
     
     <?php
       require_once "config.php";
+      require_once('includes/functions.php');
       $query = "SELECT * FROM mycovid";
       $query_run = mysqli_query($link, $query);
 
@@ -118,13 +119,21 @@ include('includes/navbar.php');
             <thead>
                 <tr>
                     <th>Total number of covid cases</th>
+                    <th>Total number of site visits</th>
+                    
                   
                 </tr>   
             </thead>
             <tbody>
-           <?php $result_count = mysqli_num_rows($query_run); ?>
+           <?php $result_count = mysqli_num_rows($query_run);
+            $total_website_views = total_views($link); // Returns total website views
+            //echo  $total_website_views;
+           
+           
+           ?>
                 <tr>
                     <td><?php echo $result_count; ?></td>
+                    <td><?php echo $total_website_views; ?></td>
                    
                     
                     
